@@ -781,44 +781,49 @@ ui <- fluidPage(useShinyjs(),#tweaks,
                                                                  br(),
                                                                  fluidRow(plotOutput("dynasty_plot")),
                                                                  fluidRow(div(DT::dataTableOutput("dynasty_tbl"), style = "font-size:90%"))))),
-                                          tabPanel("About",
+                                          tabPanel("About", 
                                                    br(),
-                                                   #uiOutput("git_readme"),
-                                                   fluidRow(h5("All data is publicly available at the RI Board of Elections website")),
-                                                   #fluidRow(tags$a(href = "http://www.elections.state.ri.us/", "RI BOE")),
+                                                   fluidRow(h5("All data is publicly available at the Rhode Island Bureau of Elections website, "), uiOutput("boe_add")),
                                                    br(),
-                                                   fluidRow(h5("Contribution data")),
-                                                   #fluidRow(tags$a(href = "http://ricampaignfinance.com/RIPublic/Contributions.aspx", "link to contributions")),
+                                                   fluidRow(h5("Contribution data, "), uiOutput("con_add")),
                                                    br(),
-                                                   fluidRow(h5("Expenditure data")),
-                                                   #fluidRow(tags$a(href = "http://ricampaignfinance.com/RIPublic/Expenditures.aspx", "link to expenditures")),
-                                                   br(),
-                                                   fluidRow(h5("Github Repo")),
-                                                   #fluidRow(tags$a(href = "https://github.com/RI-Psephology/Campaign_Finance", "link to github repository")),
+                                                   fluidRow(h5("Expenditure data, "), uiOutput("exp_add")),
                                                    br(),
                                                    fluidRow("A computer interprets \"Smith, Susan A\" differently than \"Smith, Susan\", or \"Smith, Ms Susan\", which creates difficulty in obtaining meaningful results. At least one employer had over 65 unique spelling variations."),
                                                    br(),
-                                                   fluidRow("Considerable effort was made to consolidate duplicate names. Code used to clean the data is provided. In some cases, mistakes may have been made. Please contact the ",
-                                                            #tags$a(href = "www.psephology@protonmail.com", "author"),
-                                                            " to report any issues. Every effort will be made to promptly fix any mistakes."),
+                                                   fluidRow("Considerable effort was made to consolidate duplicate names. Code used to clean the data is provided. In some cases, mistakes may have been made. If any questions or concerns, please contact the author and mistakes will be promptly corrected"),
                                                    br(),
-                                                   fluidRow("In assigning employers to an industry, the North American Industry Classification System (",
-                                                            #tags$a(href = "https://www.census.gov/cgi-bin/sssd/naics/naicsrch?chart=2017", "NAICS"),
-                                                            ") and the Bureau of Labor & Statistics, ",
-                                                            #tags$a(href = "https://www.bls.gov/iag/tgs/iag_index_naics.htm", "BLS"),  
-                                                            ", were used as guides. Final assignment is a hodgepodge of the author's best guess and leaves room for considerable improvement."),
-                                                   #tags$a(href="https://github.com/RI-Psephology/Campaign_Finance", "Github"),
-                                                   #h4("Gitbub repository located here, https://github.com/RI-Psephology/Campaign_Finance"),
-                                                   #br(),
-                                                   #h4("Data publicly available at RI Board of Elections website, http://www.elections.state.ri.us/"),
-                                                   #br(),
-                                                   #h5(paste("Last updated ", upload_date18, "2018", sep = "")),
-                                                   #br(),
-                                                   #h5("Gitbub repository found here, https://github.com/RI-Psephology/Campaign_Finance"),
-                                                   br())
-                               )), position = "left"))
+                                                   br(),
+                                                   fluidRow(uiOutput("auth_add")),
+                                                   br(),
+                                                   #fluidRow("")
+                                                   br()))), position = "left"))
 
 server <- function(input, output, session) {
+     
+     boe_link <- a("http://www.elections.state.ri.us", href = "http://www.elections.state.ri.us")
+     con_link <- a("link to contributions", href = "http://ricampaignfinance.com/RIPublic/Contributions.aspx")
+     exp_link <- a("link to expenditures", href = "http://ricampaignfinance.com/RIPublic/Expenditures.aspx")
+     auth_email <- a("Contact", href = "www.psephology@protonmail.com")
+     
+     output$boe_add <- renderUI({
+          tagList(boe_link)
+     })
+     
+     output$con_add <- renderUI({
+          tagList(con_link)
+     })
+     
+     output$exp_add <- renderUI({
+          tagList(exp_link)
+     })
+         
+         
+     output$auth_add <- renderUI({
+          
+          tagList(auth_email)
+     })
+     
      
      # url <- a("Github README", href="https://github.com/RI-Psephology/Campaign_Finance/blob/master/README.md")
      # output$tab <- renderUI({
