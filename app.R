@@ -782,12 +782,14 @@ ui <- fluidPage(useShinyjs(),#tweaks,
                                                       fluidRow(plotOutput("dynasty_plot")),
                                                       fluidRow(div(DT::dataTableOutput("dynasty_tbl"), style = "font-size:90%"))))),
                                tabPanel("About",
+                                        #br(),
+                                        #h4("Gitbub repository located here, https://github.com/RI-Psephology/Campaign_Finance"),
                                         br(),
-                                        h2(paste("All data downloaded from", srce, sep = "")),
+                                        h4("Data publicly available at RI Board of Elections website, http://www.elections.state.ri.us/"),
                                         br(),
-                                        h3("Last updated Aug 1st, 2018"),
+                                        h5(paste("Last updated ", upload_date18, "2018", sep = "")),
                                         br(),
-                                        h5("Source code can be found on Github"),
+                                        h5("Gitbub repository found here, https://github.com/RI-Psephology/Campaign_Finance"),
                                         br())
                      )), position = "left"))
 
