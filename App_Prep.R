@@ -629,6 +629,18 @@ gov18Org <- dfx %>%
 saveRDS(gov18Org, paste(dir, "gov18.rds", sep = ""))
 
 
+ginaVs <- dfx %>% 
+     #filter(CY >= 2014 & CY <= 2018) %>% 
+     mutate(Gina = ifelse(OrganizationName == "Gina M. Raimondo", "Governor\nRaimondo", "Everybody\nElse")) %>% 
+     group_by(donor_region,Gina,CY) %>% 
+     summarise(Total = sum(Amount, na.rm = TRUE)) %>% 
+     ungroup() %>% 
+     arrange(desc(Total)); head(ginaVs)
+
+# Save
+saveRDS(ginaVs, paste(dir, "ginaVs.rds", sep = ""))
+
+
 # Time Series Data
 timeSeries1 <- dfx %>% 
      filter(ContDesc != "Loan Proceeds") %>% 
