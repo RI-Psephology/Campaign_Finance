@@ -1,0 +1,10 @@
+name: psephology_app
+title:
+username:
+account: psephology
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 464141
+bundleId: 1600639
+url: https://psephology.shinyapps.io/psephology_app/
+when: 1537710312.26719
