@@ -205,7 +205,7 @@ xpOrg <- function(x) {
 
 
 #dir <- "//cdsfsp06/InterSite/Integra/analytics/Misc_Projects/Misc/Providence_Open_Data/"#Expenditures/"
-dir <- "/Users/jeffreyrichardson/Documents/Campaign_Finance/"
+dir <- "/Users/jeffreyrichardson/Documents/Campaign_Finance/Psephology_App/"
 
 
 

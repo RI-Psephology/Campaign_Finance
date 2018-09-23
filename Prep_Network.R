@@ -71,7 +71,7 @@ dupf <- function(dat, var, ...) {
 
 
 
-dir <- "/Users/jeffreyrichardson/Documents/Campaign_Finance/"
+dir <- "/Users/jeffreyrichardson/Documents/Campaign_Finance/Psephology_App/"
 
 
 dfx <- readRDS(paste(dir, "campaign_finance_2018-09-22.rds", sep = "")) %>% 

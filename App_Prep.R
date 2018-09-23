@@ -71,7 +71,7 @@ dupf <- function(dat, var, ...) {
 #dfx <- readRDS("//cdsfsp06/InterSite/Integra/analytics/Misc_Projects/Misc/Providence_Open_Data/campaign_finance_2018-08-01.rds")
 
 
-dir <- "/Users/jeffreyrichardson/Documents/Campaign_Finance/"
+dir <- "/Users/jeffreyrichardson/Documents/Campaign_Finance/Psephology_App/"
 
 dfx <- readRDS(paste(dir, "campaign_finance_2018-09-22.rds", sep = "")) %>% 
      transform(Donor_Name_Unformatted = str_to_title(trimws(Donor_Name_Unformatted))) %>% 
@@ -628,6 +628,43 @@ gov18Org <- dfx %>%
 # Save
 saveRDS(gov18Org, paste(dir, "gov18.rds", sep = ""))
 
+
+# Time Series Data
+timeSeries1 <- dfx %>% 
+     filter(ContDesc != "Loan Proceeds") %>% 
+     group_by(Month_Yr,CY) %>% 
+     summarise(Amount = sum(Amount, na.rm= TRUE)) %>% 
+     ungroup() %>% 
+     mutate(Cumulative_Total = cumsum(Amount)) %>% 
+     mutate(Loans = "Loans Excluded"); head(timeSeries1)
+
+timeSeries2 <- dfx %>% 
+     group_by(Month_Yr,CY) %>% 
+     summarise(Amount = sum(Amount, na.rm= TRUE)) %>% 
+     ungroup() %>% 
+     mutate(Cumulative_Total = cumsum(Amount)) %>% 
+     mutate(Loans = "Loans Included"); head(timeSeries2)
+
+timeSeries3 <- dfx %>% 
+     filter(ContDesc == "Loan Proceeds") %>% 
+     group_by(Month_Yr,CY) %>% 
+     summarise(Amount = sum(Amount, na.rm= TRUE)) %>% 
+     ungroup() %>% 
+     mutate(Cumulative_Total = cumsum(Amount)) %>% 
+     mutate(Loans = "Loans Only"); head(timeSeries3)
+
+timeSeries <- bind_rows(timeSeries1, timeSeries2, timeSeries3); rm(timeSeries1, timeSeries2, timeSeries3)
+
+# # Time Series Data
+# timeSeries <- dfx %>% 
+#      group_by(Month_Yr,CY) %>% 
+#      summarise(Amount = sum(Amount, na.rm= TRUE)) %>% 
+#      ungroup() %>% 
+#      mutate(Cumulative_Total = cumsum(Amount)); head(timeSeries)
+
+# Save
+saveRDS(timeSeries, paste(dir, "timeSeries.rds", sep = ""))
+
 # ***************************************************************************************
 # ***************************************************************************************
 
@@ -820,40 +857,6 @@ saveRDS(yearlyOrg, paste(dir, "yearlyOrg.rds", sep = ""))
 #      #scale_x_discrete(breaks = xlabs) +
 #      theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
 
-# Time Series Data
-timeSeries1 <- dfx %>% 
-     filter(ContDesc != "Loan Proceeds") %>% 
-     group_by(Month_Yr,CY) %>% 
-     summarise(Amount = sum(Amount, na.rm= TRUE)) %>% 
-     ungroup() %>% 
-     mutate(Cumulative_Total = cumsum(Amount)) %>% 
-     mutate(Loans = "Loans Excluded"); head(timeSeries1)
-
-timeSeries2 <- dfx %>% 
-     group_by(Month_Yr,CY) %>% 
-     summarise(Amount = sum(Amount, na.rm= TRUE)) %>% 
-     ungroup() %>% 
-     mutate(Cumulative_Total = cumsum(Amount)) %>% 
-     mutate(Loans = "Loans Included"); head(timeSeries2)
-
-timeSeries3 <- dfx %>% 
-     group_by(Month_Yr,CY) %>% 
-     summarise(Amount = sum(Amount, na.rm= TRUE)) %>% 
-     ungroup() %>% 
-     mutate(Cumulative_Total = cumsum(Amount)) %>% 
-     mutate(Loans = "Loans Only"); head(timeSeries3)
-
-timeSeries <- bind_rows(timeSeries1, timeSeries2, timeSeries3); rm(timeSeries1, timeSeries2, timeSeries3)
-
-# # Time Series Data
-# timeSeries <- dfx %>% 
-#      group_by(Month_Yr,CY) %>% 
-#      summarise(Amount = sum(Amount, na.rm= TRUE)) %>% 
-#      ungroup() %>% 
-#      mutate(Cumulative_Total = cumsum(Amount)); head(timeSeries)
-
-# Save
-saveRDS(timeSeries, paste(dir, "timeSeries.rds", sep = ""))
 timeSeries <- readRDS(paste(dir, "timeSeries.rds", sep = ""))
 
 # Time Series by Donor Location
