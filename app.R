@@ -101,7 +101,7 @@ axisLabelFun <- function(dat) {
 #dfx <- readRDS("//cdsfsp06/InterSite/Integra/analytics/Misc_Projects/Misc/Providence_Open_Data/campaign_finance_2018-07-30.rds")
 #dfx <- readRDS("//cdsfsp06/InterSite/Integra/analytics/Misc_Projects/Misc/Providence_Open_Data/campaign_finance_2018-08-01.rds")
 
-dir <- "/Users/jeffreyrichardson/Documents/Campaign_Finance/"
+dir <- "/Users/jeffreyrichardson/Documents/Campaign_Finance/Psephology_App/"
 
 # Loans by Year
 yearlyDonorLoans <- readRDS(paste(dir, "Yearly_Donor_Loans.rds", sep = ""))
