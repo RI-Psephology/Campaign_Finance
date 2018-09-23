@@ -99,17 +99,17 @@ srce <- "http://www.ricampaignfinance.com/RIPublic/Filings.aspx"
 exp <- readRDS(paste(dir, "Exp_Clean.rds", sep = ""))
 
 
-# donateVis <- dfx %>% #filter(dfx, OrganizationName %in% healthPACs) %>% 
-#      #filter(ReceiptDate > "2016-12-31") %>% 
-#      filter(ContDesc != "Loan Proceeds") %>% 
-#      group_by(Employer,OrganizationName,CY) %>% 
-#      summarise(Total = round(sum(Amount, na.rm = TRUE),0)) %>% 
-#      ungroup() %>% 
-#      arrange(desc(Total)) %>% 
-#      filter(Total > 99); head(donateVis, 10)
-# 
-# # Save
-# saveRDS(donateVis, paste(dir, "donateVis.rds", sep = ""))
+donateVis <- dfx %>% #filter(dfx, OrganizationName %in% healthPACs) %>%
+     #filter(ReceiptDate > "2016-12-31") %>%
+     filter(ContDesc != "Loan Proceeds") %>%
+     group_by(Employer,OrganizationName,CY) %>%
+     summarise(Total = round(sum(Amount, na.rm = TRUE),0)) %>%
+     ungroup() %>%
+     arrange(desc(Total)) %>%
+     filter(Total > 99); head(donateVis, 10)
+
+# Save
+saveRDS(donateVis, paste(dir, "donateVis.rds", sep = ""))
 # #donateVis <- readRDS(paste(dir, "donateVis.rds", sep = ""))
 
 
