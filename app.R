@@ -101,95 +101,205 @@ axisLabelFun <- function(dat) {
 #dfx <- readRDS("//cdsfsp06/InterSite/Integra/analytics/Misc_Projects/Misc/Providence_Open_Data/campaign_finance_2018-07-30.rds")
 #dfx <- readRDS("//cdsfsp06/InterSite/Integra/analytics/Misc_Projects/Misc/Providence_Open_Data/campaign_finance_2018-08-01.rds")
 
+# dir <- "/Users/jeffreyrichardson/Documents/Campaign_Finance/Psephology_App/"
+# 
+# # Loans by Year
+# yearlyDonorLoans <- readRDS(paste(dir, "Yearly_Donor_Loans.rds", sep = ""))
+# 
+# # Donations by Year
+# yearlyDonorOrgs <- readRDS(paste(dir, "Yearly_Donor_Orgs.rds", sep = ""))
+# 
+# # Donations
+# yearlyDonorDonations <- readRDS(paste(dir, "yearlyDonorDonations.rds", sep = ""))
+# 
+# # Top Donors
+# yearlyTopDonations <- readRDS(paste(dir, "yearlyTopDonations.rds", sep = ""))
+# 
+# # Donations by Donor City, State
+# yearlyLoc <- readRDS(paste(dir, "yearlyLoc.rds", sep = ""))
+# 
+# # Donations by Employer City, State
+# yearlyLocEmp <- readRDS(paste(dir, "yearlyLocEmp.rds", sep = ""))
+# yearlyStateEmp <- readRDS(paste(dir, "yearlyStateEmp.rds", sep = ""))
+# 
+# # PAC Donations
+# yearlyPAC <- readRDS(paste(dir, "yearlyPAC.rds", sep = ""))
+# 
+# # Orgizations
+# yearlyOrg <- readRDS(paste(dir, "yearlyOrg.rds", sep = ""))
+# 
+# # By Employer
+# yearlyEmp <- readRDS(paste(dir, "yearlyEmp.rds", sep = ""))
+# 
+# # Employer to Organization
+# yearlyEmpOrg <- readRDS(paste(dir, "yearlyEmpOrg.rds", sep = ""))
+# 
+# # Donor to Pac
+# yearlyDonorPAC <- readRDS(paste(dir, "yearlyDonorPAC.rds", sep = ""))
+# 
+# # Donor & Donor Info to Organization
+# yearlyDonationSummary <- readRDS(paste(dir, "yearlyDonationSummary.rds", sep = ""))
+# 
+# # Top Donors
+# topDonors <- readRDS(paste(dir, "topDonors.rds", sep = ""))
+# 
+# # All Donors
+# allDonors <- readRDS(paste(dir, "allDonors.rds", sep = ""))
+# 
+# # All Donors sans loans
+# allDonors_noloans <- readRDS(paste(dir, "allDonors_noloans.rds", sep = ""))
+# 
+# # Time Series Data
+# timeSeries <- readRDS(paste(dir, "timeSeries.rds", sep = ""))
+# 
+# # Industry Data
+# yearlyInd <- readRDS(paste(dir, "yearlyInd.rds", sep = ""))
+# yearlyIndEmp <- readRDS(paste(dir, "yearlyIndEmp.rds", sep = ""))
+# 
+# # Gina vs the field
+# ginaVs <- readRDS(paste(dir, "ginaVs.rds", sep = ""))
+# 
+# # Dynasties - Grouped by First & Last Name...John, Robert, Smith, Jones, etc
+# dynasties <- readRDS(paste(dir, "dynasties.rds", sep = ""))
+# 
+# # Network Visualizations of Employers to Orgs
+# donateVis <- readRDS(paste(dir, "donateVis.rds", sep = ""))
+# donateVisInd <- readRDS(paste(dir, "donateVisInd.rds", sep = ""))
+# 
+# vizFull <- readRDS(paste(dir, "vizFull.rds", sep = ""))
+# viz_emp <- readRDS(paste(dir, "viz_emp.rds", sep = ""))
+# 
+# # Read in donor to org dataframe
+# donateVisOrg <- readRDS(paste(dir, "donateVisOrg.rds", sep = ""))
+# 
+# # Expenditure Descriptions
+# expDesc <- readRDS(paste(dir, "expenditure_desc.rds", sep = ""))
+# 
+# # Read in company expenditures
+# expComp <- readRDS(paste(dir, "company_expenditures.rds", sep = ""))
+# 
+# # Expenditure Networks
+# expNet <- readRDS(paste(dir, "expNet.rds", sep = ""))
+# 
+# # Top Companies
+# topComp <- readRDS(paste(dir, "top_company_expenditures.rds", sep = ""))
+# 
+# # Expenditures from Organizations to companies
+# expOrgComp <- readRDS(paste(dir, "comp_org_expenditures.rds", sep = ""))
+# expOrg <- readRDS(paste(dir, "org_expenditures.rds", sep = ""))
+# 
+# # Campaign Finance Contributions
+# dfx <- readRDS(paste(dir, "campaign_finance_2018-09-22.rds", sep = "")) %>% 
+#      transform(Donor_Name_Unformatted = str_to_title(trimws(Donor_Name_Unformatted))) %>% 
+#      transform(OrganizationName = str_to_title(trimws(OrganizationName))) %>% 
+#      transform(OrganizationName = gsub("^Ri ", "RI ", OrganizationName)) %>% 
+#      transform(OrganizationName = gsub(" Ri$", " RI", OrganizationName)) %>% 
+#      transform(OrganizationName = gsub(" Ri ", " RI ", OrganizationName),
+#                Employer = str_to_title(trimws(Employer)),
+#                donor_st = str_to_upper(donor_st), emp_st = str_to_upper(emp_st),
+#                donor_state_name = str_to_title(donor_state_name),emp_state_name = str_to_title(emp_state_name),
+#                donor_city = str_to_title(donor_city), emp_city = str_to_title(emp_city),
+#                donor_region = ifelse(is.na(donor_region), "Other", donor_region),
+#                emp_region = ifelse(is.na(emp_region), "Other", emp_region)) %>% 
+#      transform(Employer = gsub(" Ri$", " RI", Employer)) %>% 
+#      transform(Employer = gsub("^Ri ", "RI ", Employer)) %>% 
+#      transform(Employer = gsub(" Ri ", " RI ", Employer)) %>% 
+#      mutate(Month_Yr = format(ReceiptDate, "%Y %m")) %>% 
+#      mutate(City = paste(donor_city, donor_st, sep = ", "),
+#             Emp_City = paste(emp_city, emp_st, sep = ", ")); head(dfx)
+
+
+
+
 dir <- "/Users/jeffreyrichardson/Documents/Campaign_Finance/Psephology_App/"
 
 # Loans by Year
-yearlyDonorLoans <- readRDS(paste(dir, "Yearly_Donor_Loans.rds", sep = ""))
+yearlyDonorLoans <- readRDS("Yearly_Donor_Loans.rds")
 
 # Donations by Year
-yearlyDonorOrgs <- readRDS(paste(dir, "Yearly_Donor_Orgs.rds", sep = ""))
+yearlyDonorOrgs <- readRDS("Yearly_Donor_Orgs.rds")
 
 # Donations
-yearlyDonorDonations <- readRDS(paste(dir, "yearlyDonorDonations.rds", sep = ""))
+yearlyDonorDonations <- readRDS("yearlyDonorDonations.rds")
 
 # Top Donors
-yearlyTopDonations <- readRDS(paste(dir, "yearlyTopDonations.rds", sep = ""))
+yearlyTopDonations <- readRDS("yearlyTopDonations.rds")
 
 # Donations by Donor City, State
-yearlyLoc <- readRDS(paste(dir, "yearlyLoc.rds", sep = ""))
+yearlyLoc <- readRDS("yearlyLoc.rds")
 
 # Donations by Employer City, State
-yearlyLocEmp <- readRDS(paste(dir, "yearlyLocEmp.rds", sep = ""))
-yearlyStateEmp <- readRDS(paste(dir, "yearlyStateEmp.rds", sep = ""))
+yearlyLocEmp <- readRDS("yearlyLocEmp.rds")
+yearlyStateEmp <- readRDS("yearlyStateEmp.rds")
 
 # PAC Donations
-yearlyPAC <- readRDS(paste(dir, "yearlyPAC.rds", sep = ""))
+yearlyPAC <- readRDS("yearlyPAC.rds")
 
 # Orgizations
-yearlyOrg <- readRDS(paste(dir, "yearlyOrg.rds", sep = ""))
+yearlyOrg <- readRDS("yearlyOrg.rds")
 
 # By Employer
-yearlyEmp <- readRDS(paste(dir, "yearlyEmp.rds", sep = ""))
+yearlyEmp <- readRDS("yearlyEmp.rds")
 
 # Employer to Organization
-yearlyEmpOrg <- readRDS(paste(dir, "yearlyEmpOrg.rds", sep = ""))
+yearlyEmpOrg <- readRDS("yearlyEmpOrg.rds")
 
 # Donor to Pac
-yearlyDonorPAC <- readRDS(paste(dir, "yearlyDonorPAC.rds", sep = ""))
+yearlyDonorPAC <- readRDS("yearlyDonorPAC.rds")
 
 # Donor & Donor Info to Organization
-yearlyDonationSummary <- readRDS(paste(dir, "yearlyDonationSummary.rds", sep = ""))
+yearlyDonationSummary <- readRDS("yearlyDonationSummary.rds")
 
 # Top Donors
-topDonors <- readRDS(paste(dir, "topDonors.rds", sep = ""))
+topDonors <- readRDS("topDonors.rds")
 
 # All Donors
-allDonors <- readRDS(paste(dir, "allDonors.rds", sep = ""))
+allDonors <- readRDS("allDonors.rds")
 
 # All Donors sans loans
-allDonors_noloans <- readRDS(paste(dir, "allDonors_noloans.rds", sep = ""))
+allDonors_noloans <- readRDS("allDonors_noloans.rds")
 
 # Time Series Data
-timeSeries <- readRDS(paste(dir, "timeSeries.rds", sep = ""))
+timeSeries <- readRDS("timeSeries.rds")
 
 # Industry Data
-yearlyInd <- readRDS(paste(dir, "yearlyInd.rds", sep = ""))
-yearlyIndEmp <- readRDS(paste(dir, "yearlyIndEmp.rds", sep = ""))
+yearlyInd <- readRDS("yearlyInd.rds")
+yearlyIndEmp <- readRDS("yearlyIndEmp.rds")
 
 # Gina vs the field
-ginaVs <- readRDS(paste(dir, "ginaVs.rds", sep = ""))
+ginaVs <- readRDS("ginaVs.rds")
 
 # Dynasties - Grouped by First & Last Name...John, Robert, Smith, Jones, etc
-dynasties <- readRDS(paste(dir, "dynasties.rds", sep = ""))
+dynasties <- readRDS("dynasties.rds")
 
 # Network Visualizations of Employers to Orgs
-donateVis <- readRDS(paste(dir, "donateVis.rds", sep = ""))
-donateVisInd <- readRDS(paste(dir, "donateVisInd.rds", sep = ""))
+donateVis <- readRDS("donateVis.rds")
+donateVisInd <- readRDS("donateVisInd.rds")
 
-vizFull <- readRDS(paste(dir, "vizFull.rds", sep = ""))
-viz_emp <- readRDS(paste(dir, "viz_emp.rds", sep = ""))
+vizFull <- readRDS("vizFull.rds")
+viz_emp <- readRDS("viz_emp.rds")
 
 # Read in donor to org dataframe
-donateVisOrg <- readRDS(paste(dir, "donateVisOrg.rds", sep = ""))
+donateVisOrg <- readRDS("donateVisOrg.rds")
 
 # Expenditure Descriptions
-expDesc <- readRDS(paste(dir, "expenditure_desc.rds", sep = ""))
+expDesc <- readRDS("expenditure_desc.rds")
 
 # Read in company expenditures
-expComp <- readRDS(paste(dir, "company_expenditures.rds", sep = ""))
+expComp <- readRDS("company_expenditures.rds")
 
 # Expenditure Networks
-expNet <- readRDS(paste(dir, "expNet.rds", sep = ""))
+expNet <- readRDS("expNet.rds")
 
 # Top Companies
-topComp <- readRDS(paste(dir, "top_company_expenditures.rds", sep = ""))
+topComp <- readRDS("top_company_expenditures.rds")
 
 # Expenditures from Organizations to companies
-expOrgComp <- readRDS(paste(dir, "comp_org_expenditures.rds", sep = ""))
-expOrg <- readRDS(paste(dir, "org_expenditures.rds", sep = ""))
+expOrgComp <- readRDS("comp_org_expenditures.rds")
+expOrg <- readRDS("org_expenditures.rds")
 
 # Campaign Finance Contributions
-dfx <- readRDS(paste(dir, "campaign_finance_2018-09-22.rds", sep = "")) %>% 
+dfx <- readRDS("campaign_finance_2018-09-22.rds") %>% 
      transform(Donor_Name_Unformatted = str_to_title(trimws(Donor_Name_Unformatted))) %>% 
      transform(OrganizationName = str_to_title(trimws(OrganizationName))) %>% 
      transform(OrganizationName = gsub("^Ri ", "RI ", OrganizationName)) %>% 
@@ -207,6 +317,8 @@ dfx <- readRDS(paste(dir, "campaign_finance_2018-09-22.rds", sep = "")) %>%
      mutate(Month_Yr = format(ReceiptDate, "%Y %m")) %>% 
      mutate(City = paste(donor_city, donor_st, sep = ", "),
             Emp_City = paste(emp_city, emp_st, sep = ", ")); head(dfx)
+
+
 
 srce <- "http://www.ricampaignfinance.com/RIPublic/Filings.aspx"
 
