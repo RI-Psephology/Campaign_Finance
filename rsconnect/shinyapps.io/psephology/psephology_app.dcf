@@ -5,6 +5,6 @@ account: psephology
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 464141
-bundleId: 1600639
+bundleId: 1600767
 url: https://psephology.shinyapps.io/psephology_app/
-when: 1537710312.26719
+when: 1537718793.98709
