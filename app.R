@@ -791,11 +791,11 @@ ui <- fluidPage(useShinyjs(),#tweaks,
                                                    br(),
                                                    fluidRow("A computer interprets \"Smith, Susan A\" differently than \"Smith, Susan\", or \"Smith, Ms Susan\", which creates difficulty in obtaining meaningful results. At least one employer had over 65 unique spelling variations."),
                                                    br(),
-                                                   fluidRow("Considerable effort was made to consolidate duplicate names. Code used to clean the data is provided. In some cases, mistakes may have been made. If any questions or concerns, please contact the author, psephology@protonmail.com, and mistakes will be promptly corrected."),
+                                                   fluidRow("Considerable effort was made to consolidate duplicate names. Code used to clean the data is available on Github (link below). In some cases, mistakes may have been made. If any questions or concerns, please contact the author, psephology@protonmail.com, and mistakes will be promptly corrected."),
                                                    br(),
                                                    #br(),
-                                                   #fluidRow(uiOutput("auth_add")),
-                                                   #br(),
+                                                   fluidRow(uiOutput("git_add")),
+                                                   br(),
                                                    #fluidRow("")
                                                    br()))), position = "left"))
 
@@ -805,6 +805,7 @@ server <- function(input, output, session) {
      con_link <- a("link to contributions", href = "http://ricampaignfinance.com/RIPublic/Contributions.aspx")
      exp_link <- a("link to expenditures", href = "http://ricampaignfinance.com/RIPublic/Expenditures.aspx")
      auth_email <- a("Contact", href = "www.psephology@protonmail.com")
+     git_link <- a("Github repository", href = "https://github.com/RI-Psephology/Campaign_Finance")
      
      output$boe_add <- renderUI({
           tagList(boe_link)
@@ -817,8 +818,12 @@ server <- function(input, output, session) {
      output$exp_add <- renderUI({
           tagList(exp_link)
      })
-         
-         
+     
+     output$git_add <- renderUI({
+          tagList(git_link)
+     })
+     
+     
      # output$auth_add <- renderUI({
      #      
      #      tagList(auth_email)
