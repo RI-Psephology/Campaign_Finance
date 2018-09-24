@@ -791,11 +791,11 @@ ui <- fluidPage(useShinyjs(),#tweaks,
                                                    br(),
                                                    fluidRow("A computer interprets \"Smith, Susan A\" differently than \"Smith, Susan\", or \"Smith, Ms Susan\", which creates difficulty in obtaining meaningful results. At least one employer had over 65 unique spelling variations."),
                                                    br(),
-                                                   fluidRow("Considerable effort was made to consolidate duplicate names. Code used to clean the data is provided. In some cases, mistakes may have been made. If any questions or concerns, please contact the author and mistakes will be promptly corrected"),
+                                                   fluidRow("Considerable effort was made to consolidate duplicate names. Code used to clean the data is provided. In some cases, mistakes may have been made. If any questions or concerns, please contact the author, psephology@protonmail.com, and mistakes will be promptly corrected."),
                                                    br(),
-                                                   br(),
-                                                   fluidRow(uiOutput("auth_add")),
-                                                   br(),
+                                                   #br(),
+                                                   #fluidRow(uiOutput("auth_add")),
+                                                   #br(),
                                                    #fluidRow("")
                                                    br()))), position = "left"))
 
@@ -819,10 +819,10 @@ server <- function(input, output, session) {
      })
          
          
-     output$auth_add <- renderUI({
-          
-          tagList(auth_email)
-     })
+     # output$auth_add <- renderUI({
+     #      
+     #      tagList(auth_email)
+     # })
      
      
      # url <- a("Github README", href="https://github.com/RI-Psephology/Campaign_Finance/blob/master/README.md")
