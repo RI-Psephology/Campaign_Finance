@@ -185,7 +185,7 @@ campaignStart <- Sys.time() %>% print
 # # Transport, Water, Direct Selling
 # 
 # ***********************************************************************************
-dir <- "//cdsfsp06/InterSite/Integra/analytics/Misc_Projects/Misc/Providence_Open_Data/2018-09-03/Contributions/"
+dir <- "/Users/jeffreyrichardson/Documents/Campaign_Finance/Psephology_App/"
 
 a <- read.csv(paste(dir, "a.csv", sep = ""), colClasses = "character")
 b <- read.csv(paste(dir, "b.csv", sep = ""), colClasses = "character")

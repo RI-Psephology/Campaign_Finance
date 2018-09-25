@@ -105,7 +105,7 @@ z <- read.csv(paste(dir, "z.csv", sep = ""), colClasses = "character")
 
 
 
-dir <- "//cdsfsp06/InterSite/Integra/analytics/Misc_Projects/Misc/Providence_Open_Data/"#Expenditures/"
+dir <- "/Users/jeffreyrichardson/Documents/Campaign_Finance/Psephology_App/"
 
 
 # Read in the latest expenditure data
