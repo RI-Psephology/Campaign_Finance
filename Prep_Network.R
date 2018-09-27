@@ -74,7 +74,7 @@ dupf <- function(dat, var, ...) {
 dir <- "/Users/jeffreyrichardson/Documents/Campaign_Finance/Psephology_App/"
 
 
-dfx <- readRDS(paste(dir, "campaign_finance_2018-09-22.rds", sep = "")) %>% 
+dfx <- readRDS(paste(dir, "campaign_finance_2018-09-27.rds", sep = "")) %>% 
      transform(Donor_Name_Unformatted = str_to_title(trimws(Donor_Name_Unformatted))) %>% 
      transform(OrganizationName = str_to_title(trimws(OrganizationName))) %>% 
      transform(OrganizationName = gsub("^Ri ", "RI ", OrganizationName)) %>% 

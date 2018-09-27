@@ -6341,6 +6341,9 @@ dfx$Employer[dfx$EmployerName %in% donovan] <- "donovan and sons"; dfx$Industry[
 # varname <- sort(grep("varname", dfx$EmployerName, value = TRUE, ignore.case = TRUE)) %>% unique(); cheq(varname)
 # dfx$Employer[dfx$EmployerName %in% varname] <- "varname"; dfx$Industry[dfx$EmployerName %in% varname] <- ""; rm(varname)
 
+# Save to this point
+saveRDS(dfx, paste(dir, "data_thru_employers.rds", sep = ""))
+
 # Give up
 dfx$Industry[dfx$Industry == ""] <- "Uncoded"
 
@@ -6496,7 +6499,7 @@ claiborneD <-  sort(grep("pell, the honorable claiborne|pell, sen claiborne|pell
 dfx$FullName[dfx$FullName %in% claiborneD] <- "Claiborne de Borda Pell"; rm(claiborneD)
 fung <- grep("fung, a|fung, mr a|fung, campaign committee", dfx$FullName, value = TRUE, ignore.case = TRUE) %>% unique %>% print; fined(fung)
 dfx$FullName[dfx$FullName %in% fung] <- "Fung, Allan"; rm(fung)
-shekarchi <- grep("shekarchi, mr k jos|sekarchi, joseph|shekarchi, k j|shekarchi esq, hon k|shekarchi esq, k jos|shekarchi, f|shekarchi, joseph|shekarchi, joe", dfx$FullName, value = TRUE, ignore.case = TRUE) %>% unique %>% print; fined(shekarchi);
+shekarchi <- grep("sheckarchi, joe|sherkarchi, jos|shekarchi, mr k jos|sekarchi, joseph|shekarchi, k j|shekarchi esq, hon k|shekarchi esq, k jos|shekarchi, f|shekarchi, joseph|shekarchi, joe", dfx$FullName, value = TRUE, ignore.case = TRUE) %>% unique %>% print; fined(shekarchi);
 dfx$FullName[dfx$FullName %in% shekarchi] <- "Shekarchi, Joe"; rm(shekarchi)
 johnPetrarca <- grep("prtrarca, john h|patrarca, mr john|petraca, john|petrarca, john|petrarca, mr john|petarca, john", dfx$FullName, value = TRUE, ignore.case = TRUE) %>% unique %>% print; fined(johnPetrarca); 
 dfx$FullName[dfx$FullName %in% johnPetrarca] <- "Petrarca, John"; rm(johnPetrarca)
@@ -6519,7 +6522,11 @@ dfx$FullName[dfx$FullName %in% antPaolino] <- "Paolino, Anthony J"; rm(antPaolin
 louPaolino <- sort(grep("paolino, lou|paolino, mr lou", dfx$FullName, value = TRUE, ignore.case = TRUE) %>% unique) %>% print; fined(louPaolino)
 dfx$FullName[dfx$FullName %in% louPaolino] <- "Paolino, Louis"; rm(louPaolino)
 matiello <- sort(grep("friends of, nicholas a|mattiello committee|mattiello, committee|mattiello, speaker nick|mattiello esq, nicholas|mattiello, n|matiello, nick|mattielo, nick|mattiello, f|nick mattiello|mattiello, re|matielo|matiello|mattiello, rep nicholas", dfx$FullName, value = TRUE, ignore.case = TRUE) %>% unique) %>% print; fined(matiello)
-dfx$FullName[dfx$FullName %in% matiello] <- "Mattiello, Nicholas"; rm(matiello)
+dfx$FullName[dfx$FullName %in% matiello & dfx$donor_city != "johnston"] <- "Mattiello, Nicholas"; rm(matiello)
+matiello <- sort(grep("friends of, nicholas a|mattiello committee|mattiello, committee|mattiello, speaker nick|mattiello esq, nicholas|mattiello, n|matiello, nick|mattielo, nick|mattiello, f|nick mattiello|mattiello, re|matielo|matiello|mattiello, rep nicholas", dfx$FullName, value = TRUE, ignore.case = TRUE) %>% unique) %>% print; fined(matiello)
+dfx$FullName[dfx$FullName %in% matiello & dfx$donor_city == "johnston"] <- "Mattiello, Nicola"; rm(matiello)
+matiello <- sort(grep("mattiello, mary a", dfx$FullName, value = TRUE, ignore.case = TRUE) %>% unique) %>% print; fined(matiello)
+dfx$FullName[dfx$FullName %in% matiello] <- "Mattiello, Mary A"; rm(matiello)
 tomBadway <- sort(grep("badway, tom|badaway, thomas|badway, thomas|badway, mr thomas", dfx$FullName, value = TRUE, ignore.case = TRUE) %>% unique) %>% print; fined(tomBadway)
 dfx$FullName[dfx$FullName %in% tomBadway] <- "Badway, Thomas"; rm(tomBadway)
 ralphPal <- sort(grep("palumbo, ralph|palumbo jr, mr ralph|palumbo jr, ralph", dfx$FullName, value = TRUE, ignore.case = TRUE) %>% unique) %>% print; fined(ralphPal)
@@ -9676,7 +9683,8 @@ dir <- "/Users/jeffreyrichardson/Documents/Campaign_Finance/"
 #saveRDS(dfx, "//cdsfsp06/InterSite/Integra/analytics/Misc_Projects/Misc/Providence_Open_Data/campaign_finance_2018-08-01.rds")
 #saveRDS(dfx, "//cdsfsp06/InterSite/Integra/analytics/Misc_Projects/Misc/Providence_Open_Data/campaign_finance_2018-08-04.rds")
 #saveRDS(dfx, paste(dir, "campaign_finance_2018-09-18.rds", sep = ""))
-saveRDS(dfx, paste(dir, "campaign_finance_2018-09-22.rds", sep = ""))
+#saveRDS(dfx, paste(dir, "campaign_finance_2018-09-22.rds", sep = ""))
+saveRDS(dfx, paste(dir, "campaign_finance_2018-09-27.rds", sep = ""))
 
 #FinishTime <- Sys.time(); FinishTime - Start
 FinishTime <- Sys.time() 
