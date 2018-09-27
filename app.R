@@ -318,7 +318,7 @@ expOrgComp <- readRDS("comp_org_expenditures.rds")
 expOrg <- readRDS("org_expenditures.rds")
 
 # Campaign Finance Contributions
-dfx <- readRDS("campaign_finance_2018-09-22.rds") %>% 
+dfx <- readRDS("campaign_finance_2018-09-27.rds") %>% 
      transform(Donor_Name_Unformatted = str_to_title(trimws(Donor_Name_Unformatted))) %>% 
      transform(OrganizationName = str_to_title(trimws(OrganizationName))) %>% 
      transform(OrganizationName = gsub("^Ri ", "RI ", OrganizationName)) %>% 
