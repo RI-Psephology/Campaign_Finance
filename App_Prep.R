@@ -101,6 +101,18 @@ srce <- "http://www.ricampaignfinance.com/RIPublic/Filings.aspx"
 # organizations <- sort(unique(dfx$OrganizationName))
 # donor_cities <- sort(unique(dfx$donor_city))
 # emp_cities <- sort(unique(dfx$emp_city))
+aliases <- dfx %>% 
+     group_by(FullName) %>% 
+     summarise(Aliases = paste(sort(unique(str_to_title(Donor_Name_Unformatted))), collapse = "| "),
+               Employers = paste(sort(unique(str_to_title(EmployerName))), collapse = "| "),
+               Industries = paste(sort(unique(Industry)), collapse = "| ")) %>% 
+     ungroup() %>% 
+     arrange(FullName); head(aliases)
+
+
+# Save
+saveRDS(aliases, paste(dir, "aliases.rds", sep = ""))
+
 
 # All Donors w/ Over $1000
 topDonors <- dfx %>% group_by(FullName) %>% 
@@ -221,11 +233,11 @@ yearlyDonorLoans <- dfx %>% #transform(FullName = gsub("\\s{2,}", " ", trimws(Fu
                #Number_of_PAC_Loans = n_distinct(ContributionID[PAC == "PAC"]),
                Organizations_Loaned_To = n_distinct(OrganizationName),
                Orgs_Receiving_Loans = paste(unique(sort(OrganizationName)), collapse = " | ")) %>% 
-               #Orgs_Receiving_Loans = paste(unique(OrganizationName[PAC == "Not PAC"]), collapse = " | "),
-               #Org_Loan_Total = sum(Amount[PAC == "Not PAC"], na.rm = TRUE),
-               #PACs_Loaned_To = n_distinct(OrganizationName[PAC == "PAC"]),
-               #PACs_Receiving_Loans = paste(unique(PAC[PAC == "PAC"]), collapse = " | "),
-               #PAC_Loan_Total = sum(Amount[PAC == "PAC"])) %>%
+     #Orgs_Receiving_Loans = paste(unique(OrganizationName[PAC == "Not PAC"]), collapse = " | "),
+     #Org_Loan_Total = sum(Amount[PAC == "Not PAC"], na.rm = TRUE),
+     #PACs_Loaned_To = n_distinct(OrganizationName[PAC == "PAC"]),
+     #PACs_Receiving_Loans = paste(unique(PAC[PAC == "PAC"]), collapse = " | "),
+     #PAC_Loan_Total = sum(Amount[PAC == "PAC"])) %>%
      ungroup() %>% filter(Total_Loan_Amount > 0) %>% 
      transform(Orgs_Receiving_Loans = gsub(" \\| $", "", Orgs_Receiving_Loans)) %>% 
      arrange(desc(Total_Loan_Amount)); head(yearlyDonorLoans)
@@ -325,7 +337,7 @@ yearlyDonorPAC <- dfx %>%
                Max_Donation = max(Amount, na.rm = TRUE)) %>%
      ungroup() %>% filter(Total_Donation_Amount > 0) %>% 
      arrange(#desc(CY), 
-             desc(Total_Donation_Amount)); head(yearlyDonorPAC)
+          desc(Total_Donation_Amount)); head(yearlyDonorPAC)
 
 # Save
 saveRDS(yearlyDonorPAC, paste(dir, "yearlyDonorPAC.rds", sep = ""))
@@ -364,7 +376,7 @@ yearlyEmp_to_Org <- dfx %>%
                Max_Donation = max(Amount, na.rm = TRUE)) %>%
      ungroup() %>% filter(Total_Donation_Amount > 0) %>% 
      arrange(desc(CY), 
-          desc(Total_Donation_Amount)); head(yearlyEmp_to_Org)
+             desc(Total_Donation_Amount)); head(yearlyEmp_to_Org)
 
 saveRDS(yearlyEmp_to_Org, paste(dir, "yearlyEmp_to_Org.rds", sep = ""))
 
@@ -394,7 +406,7 @@ saveRDS(yearlyLoc, paste(dir, "yearlyLoc.rds", sep = ""))
 
 yearlyState <- dfx %>% 
      #filter(ContDesc != "Loan Proceeds") %>% 
-    #mutate(City = paste(donor_city, donor_st, sep = ", ")) %>% 
+     #mutate(City = paste(donor_city, donor_st, sep = ", ")) %>% 
      group_by(donor_state_name, donor_st, donor_region,CY) %>%
      summarise(Donors = n_distinct(FullName),
                Number_of_Donations = n_distinct(ContributionID),
@@ -456,7 +468,7 @@ yearlyStateEmp <- dfx %>%
                Avg_Org_Donation_Amt = round(Org_Donation_Amount / Num_Org_Donations, 2)) %>%
      ungroup() %>% 
      arrange(#desc(CY), 
-             desc(Total_Donation_Amount)); head(yearlyStateEmp)
+          desc(Total_Donation_Amount)); head(yearlyStateEmp)
 
 # Save
 saveRDS(yearlyStateEmp, paste(dir, "yearlyStateEmp.rds", sep = ""))
@@ -478,12 +490,12 @@ yearlyOrg <- dfx %>%
 
 # Save
 saveRDS(yearlyOrg, paste(dir, "yearlyOrg.rds", sep = ""))
- 
+
 # Employer Summary
 yearlyEmp <- dfx %>% 
      filter(ContDesc != "Loan Proceeds") %>% 
      group_by(#EmployerName,
-              Employer,Industry,Industry2,CY) %>%
+          Employer,Industry,Industry2,CY) %>%
      summarise(Number_of_Donations = n_distinct(ContributionID),
                Donations_Under_100 = n_distinct(ContributionID[Amount < 100]),
                Donations_Over_100 = n_distinct(ContributionID[Amount >= 100]),
@@ -509,7 +521,7 @@ saveRDS(yearlyEmp, paste(dir, "yearlyEmp.rds", sep = ""))
 yearlyEmpOrg <- dfx  %>% 
      filter(ContDesc != "Loan Proceeds") %>% 
      group_by(Employer,#Industry,
-          Industry2,OrganizationName,CY) %>%
+              Industry2,OrganizationName,CY) %>%
      summarise(Number_of_Donations = n_distinct(ContributionID),
                Donations_Under_100 = n_distinct(ContributionID[Amount < 100]),
                Donations_Over_100 = n_distinct(ContributionID[Amount >= 100]),
@@ -601,7 +613,7 @@ yearlyDonationSummary <- dfx  %>%
                Max_Donation = max(Amount, na.rm = TRUE)) %>% 
      ungroup() %>%
      arrange(desc(CY), 
-          desc(Total_Donation_Amount)); head(yearlyDonationSummary)
+             desc(Total_Donation_Amount)); head(yearlyDonationSummary)
 
 # Save
 saveRDS(yearlyDonationSummary, paste(dir, "yearlyDonationSummary.rds", sep = ""))
@@ -734,7 +746,7 @@ gov18_donorSt <- dfx %>%
      filter(donor_region != "Rhode Island") %>% 
      group_by(OrganizationName,#City,donor_city,donor_st, donor_state_name,
               donor_region#,CY
-              ) %>%
+     ) %>%
      summarise(Number_of_Donations = n_distinct(ContributionID),
                Donations_Under_100 = n_distinct(ContributionID[Amount < 100]),
                Donations_Over_100 = n_distinct(ContributionID[Amount >= 100]),
@@ -800,7 +812,7 @@ ggplot(ginaVs, aes(Gina, Total)) +
      labs(x = "", y = "Donations Received", 
           title = "Rhode Island Political Donations Received by State of Donor",
           subtitle = unique(ginaVs$Range)) +
-          #caption = paste(srce, "downloaded on Feb 9, 2017.  Donation 'ReceiptDate' between Jan 1, 2017 & Dec 31, 2017", sep = "\n")) +
+     #caption = paste(srce, "downloaded on Feb 9, 2017.  Donation 'ReceiptDate' between Jan 1, 2017 & Dec 31, 2017", sep = "\n")) +
      theme_bw() +
      theme(legend.position = "none", legend.background = element_rect(color = "gray50"),
            legend.title = element_blank(),
@@ -832,7 +844,7 @@ ggplot(ginaVsInd, aes(Gina, Total)) +
            axis.text.x = element_blank(),
            plot.caption = element_text(hjust = 0.5)) +
      facet_wrap(~Industry#, scales = "free"
-                )
+     )
 
 
 
@@ -845,7 +857,7 @@ ggplot(ginaVsInd, aes(Gina, Total)) +
 #           Avg_Donation_Amount = round(Total_Donation_Amount / Number_of_Donations, 2),
 #           Max_Donation = max(Max_Donation, na.rm = TRUE)) %>% 
 #      ungroup() %>% 
-     
+
 
 
 
@@ -1064,7 +1076,7 @@ donDt <- dfx %>%
      ungroup() %>%
      arrange(Mo) %>% 
      mutate(Run = cumsum(Total)); head(donDt)
-     
+
 
 yearlyDonorOrgs %>% 
      filter(CY >= 2015 & CY <= 2018) %>% 
