@@ -227,7 +227,7 @@ axisLabelFun <- function(dat) {
 
 
 
-dir <- "/Users/jeffreyrichardson/Documents/Campaign_Finance/Psephology_App/"
+#dir <- "/Users/jeffreyrichardson/Documents/Campaign_Finance/Psephology_App/"
 
 # Donors
 aliases <- readRDS("aliases.rds")
