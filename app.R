@@ -296,6 +296,7 @@ donateVis <- readRDS("donateVis.rds")
 donateVisInd <- readRDS("donateVisInd.rds")
 
 vizFull <- readRDS("vizFull.rds")
+vizTop <- readRDS("vizTop.rds")
 viz_emp <- readRDS("viz_emp.rds")
 
 # Read in donor to org dataframe
@@ -318,7 +319,7 @@ expOrgComp <- readRDS("comp_org_expenditures.rds")
 expOrg <- readRDS("org_expenditures.rds")
 
 # Campaign Finance Contributions
-dfx <- readRDS("campaign_finance_2018-09-27.rds") %>% 
+dfx <- readRDS("campaign_finance_2018-09-22.rds") %>% 
      transform(Donor_Name_Unformatted = str_to_title(trimws(Donor_Name_Unformatted))) %>% 
      transform(OrganizationName = str_to_title(trimws(OrganizationName))) %>% 
      transform(OrganizationName = gsub("^Ri ", "RI ", OrganizationName)) %>% 
@@ -543,11 +544,12 @@ ui <- fluidPage(useShinyjs(),#tweaks,
                                                                                              label = "Number of Observations",
                                                                                              value = 15,
                                                                                              min = 5, max = 35))),
-                                                                 
+                                                                 br(),
                                                                  # fluidRow(selectInput("checkDonorState","Choose State(s):",donor_states, selected = donor_states,
                                                                  #                      multipe = TRUE)),
                                                                  #actionLink("selectall","Select All")),
                                                                  fluidRow(plotOutput("city_plot")),
+                                                                 br(),
                                                                  fluidRow(div(DT::dataTableOutput("city_tbl"), style = "font-size:90%"))),
                                                         tabPanel("By State", 
                                                                  br(),
@@ -654,6 +656,29 @@ ui <- fluidPage(useShinyjs(),#tweaks,
                                           #                        fluidRow(div(DT::dataTableOutput("gov18_donorSt_tbl"), style = "font-size:90%"))))),
                                           tabPanel("Network Vis",
                                                    tabsetPanel(
+                                                        tabPanel("Filter Network",
+                                                                 fluidRow(column(width = 4, sliderInput("slider_dViz", "Observations", min = 5, max = 1000, value = 40)),
+                                                                          column(width = 2, radioButtons("layout_dViz", label = "Type of Layout",inline = FALSE,
+                                                                                                         choices = c("spring","circle"), selected = "spring")),
+                                                                          column(width = 2, radioButtons("colorBy_dViz", label = "Color By",inline = FALSE,
+                                                                                                         choices = c("Making Contribution", "Receiving Contribution"), selected = "Receiving Contribution")),
+                                                                          column(width = 4, sliderInput("vertexSize_dViz", "Node Size", min = 0.01, max = 10, value = 2))),
+                                                                 fluidRow(column(width = 4, sliderInput("edgeLabSlide_dViz", "Edge Label Size", min = 0.01, max = 3, value = 0.45)),
+                                                                          column(width = 2, checkboxInput("dViz_fade", "Fade", value = FALSE)),
+                                                                          column(width = 2, radioButtons("dViz_bg", "Background", inline = TRUE,
+                                                                                                         choices = c("Dark","Light"))),
+                                                                          column(width = 4, sliderInput("nodeSlide_dViz", "Node Label Size", min = 0.01, max = 20, value = 5))),
+                                                                 fluidRow(column(width = 6,
+                                                                                 radioButtons("dViz_Filter", label = h5("Filter to Specific"), 
+                                                                                                    choices = c("Donor","Candidate","Employer","Industry","SubIndustry","No Filters"),
+                                                                                                    selected = NULL, inline = TRUE)),
+                                                                          column(width = 6,
+                                                                                 conditionalPanel(
+                                                                                      condition = "input.dViz_Filter != 'No Filters'",
+                                                                                      selectInput("dViz_Select", "Choose", choices = "")))),
+                                                                 #column(width = 4, radioButtons("viz_loans", "Include Loans?", choices = c("Include Loans", "Remove Loans"), selected = "Remove Loans"))),
+                                                                 fluidRow(plotOutput("dViz_plot", height = "600px")),
+                                                                 fluidRow(div(DT::dataTableOutput("dViz_tbl"), style = "font-size:90%"))),
                                                         # tabPanel("by Employer", 
                                                         #          #br(),
                                                         #          br(),
@@ -825,22 +850,46 @@ ui <- fluidPage(useShinyjs(),#tweaks,
                                                                  fluidRow(plotOutput("dynasty_plot")),
                                                                  fluidRow(div(DT::dataTableOutput("dynasty_tbl"), style = "font-size:90%"))))),
                                           tabPanel("About", 
-                                                   br(),
-                                                   fluidRow(h5("All data is publicly available at the Rhode Island Bureau of Elections website, "), uiOutput("boe_add")),
-                                                   br(),
-                                                   fluidRow(h5("Contribution data, "), uiOutput("con_add")),
-                                                   br(),
-                                                   fluidRow(h5("Expenditure data, "), uiOutput("exp_add")),
-                                                   br(),
-                                                   fluidRow("A computer interprets \"Smith, Susan A\" differently than \"Smith, Susan\", or \"Smith, Ms Susan\", which creates difficulty in obtaining meaningful results. At least one employer had over 65 unique spelling variations."),
-                                                   br(),
-                                                   fluidRow("Considerable effort was made to consolidate duplicate names. Code used to clean the data is available on Github (link below). In some cases, mistakes may have been made. If any questions or concerns, please contact the author, psephology@protonmail.com, and mistakes will be promptly corrected."),
-                                                   br(),
-                                                   #br(),
-                                                   fluidRow(uiOutput("git_add")),
-                                                   br(),
-                                                   #fluidRow("")
-                                                   br()))), position = "left"))
+                                                   tabsetPanel(
+                                                        tabPanel("Project Description",
+                                                                 br(),
+                                                                 fluidRow(h5("All data is publicly available at the Rhode Island Bureau of Elections website, "), uiOutput("boe_add")),
+                                                                 br(),
+                                                                 fluidRow(h5("Contribution data, "), uiOutput("con_add")),
+                                                                 br(),
+                                                                 fluidRow(h5("Expenditure data, "), uiOutput("exp_add")),
+                                                                 br(),
+                                                                 fluidRow("A computer interprets \"Smith, Susan A\" differently than \"Smith, Susan\", or \"Smith, Ms Susan\", which creates difficulty in obtaining meaningful results. At least one employer had over 65 unique spelling variations."),
+                                                                 br(),
+                                                                 fluidRow("Considerable effort was made to consolidate duplicate names. Code used to clean the data is available on Github (link below). In some cases, mistakes may have been made. If any questions or concerns, please contact the author, psephology@protonmail.com, and mistakes will be promptly corrected."),
+                                                                 br(),
+                                                                 #br(),
+                                                                 fluidRow(uiOutput("git_add")),
+                                                                 br(),
+                                                                 #fluidRow("")
+                                                                 br()),
+                                                        tabPanel("Helpful Links",
+                                                                 br(),
+                                                                 fluidRow(h5("Lobby View"), uiOutput("lobbyview_add")),
+                                                                 br()))))), position = "left"))
+# 
+#                                           tabPanel("About", 
+#                                                    br(),
+#                                                    fluidRow(h5("All data is publicly available at the Rhode Island Bureau of Elections website, "), uiOutput("boe_add")),
+#                                                    br(),
+#                                                    fluidRow(h5("Contribution data, "), uiOutput("con_add")),
+#                                                    br(),
+#                                                    fluidRow(h5("Expenditure data, "), uiOutput("exp_add")),
+#                                                    br(),
+#                                                    fluidRow("A computer interprets \"Smith, Susan A\" differently than \"Smith, Susan\", or \"Smith, Ms Susan\", which creates difficulty in obtaining meaningful results. At least one employer had over 65 unique spelling variations."),
+#                                                    br(),
+#                                                    fluidRow("Considerable effort was made to consolidate duplicate names. Code used to clean the data is available on Github (link below). In some cases, mistakes may have been made. If any questions or concerns, please contact the author, psephology@protonmail.com, and mistakes will be promptly corrected."),
+#                                                    br(),
+#                                                    #br(),
+#                                                    fluidRow(uiOutput("git_add")),
+#                                                    br(),
+#                                                    #fluidRow("")
+#                                                    br()))), position = "left"))
 
 server <- function(input, output, session) {
      
@@ -849,6 +898,7 @@ server <- function(input, output, session) {
      exp_link <- a("link to expenditures", href = "http://ricampaignfinance.com/RIPublic/Expenditures.aspx")
      auth_email <- a("Contact", href = "www.psephology@protonmail.com")
      git_link <- a("Github repository", href = "https://github.com/RI-Psephology/Campaign_Finance")
+     lobbyview_link <- a("Lobby View", href = "https://www.lobbyview.org/#!/")
      
      output$boe_add <- renderUI({
           tagList(boe_link)
@@ -871,7 +921,34 @@ server <- function(input, output, session) {
      #      
      #      tagList(auth_email)
      # })
+     # vChoice <- reactive({
+     #      input
+     # })
      
+     
+     select_choices <- reactive({
+          if(input$dViz_Filter == "Donor") {
+               donors
+          } else if (input$dViz_Filter == "Candidate") {
+               organizations
+          } else if (input$dViz_Filter == "Employer") {
+               employers
+          } else if (input$dViz_Filter == "Industry") {
+               industries
+          } else if(input$dViz_Filter == "SubIndustry") {
+               subIndustries
+          } else {
+               ""
+          }
+     })
+     
+     
+     observe({
+          updateSelectInput(session,
+                            "dViz_Select",
+                            choices = select_choices()
+          )
+     })
      
      # url <- a("Github README", href="https://github.com/RI-Psephology/Campaign_Finance/blob/master/README.md")
      # output$tab <- renderUI({

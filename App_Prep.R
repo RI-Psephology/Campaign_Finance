@@ -692,7 +692,7 @@ saveRDS(timeSeries, paste(dir, "timeSeries.rds", sep = ""))
 # ***************************************************************************************
 # ***************************************************************************************
 
-ggplot(gov18Org, aes(CY,Total_Donation_Amount)) +
+%>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% ggplot(gov18Org, aes(CY,Total_Donation_Amount)) +
      geom_point(size = 2, aes(color = OrganizationName), alpha = 0.5) +
      geom_line(stat = "identity", size = 1,  aes(group = OrganizationName, color = OrganizationName)) +
      scale_y_continuous(label = dollar) +

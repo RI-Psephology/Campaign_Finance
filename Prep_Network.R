@@ -226,7 +226,9 @@ saveRDS(donateVisOrg, paste(dir, "donateVisOrg.rds", sep = ""))
 
 # *********************************************************************
 
+# Determine Main Industry & Top Employer for each donor
 fullInd <- dfx %>% filter(!Industry %in% c("Unavailable","Uncoded","Unemployed","Retired","Self Employed")) %>% 
+     filter(ContDesc != "Loan Proceeds") %>% 
      group_by(FullName,Industry) %>% 
      summarise(Total = sum(Amount, na.rm = TRUE)) %>% 
      ungroup() %>% 
@@ -238,6 +240,7 @@ fullInd <- dfx %>% filter(!Industry %in% c("Unavailable","Uncoded","Unemployed",
      select(-c(Total,Rnk)); head(fullInd)
 
 fullInd2 <- dfx %>% filter(!Industry %in% c("Unavailable","Uncoded")) %>% 
+     filter(ContDesc != "Loan Proceeds") %>% 
      filter(FullName != "") %>% 
      filter(!FullName %in% fullInd$FullName) %>% 
      group_by(FullName,Industry) %>% 
@@ -251,6 +254,7 @@ fullInd2 <- dfx %>% filter(!Industry %in% c("Unavailable","Uncoded")) %>%
      select(-c(Total,Rnk)); head(fullInd2)
 
 fullInd3 <- dfx %>% #filter(!Industry %in% c("Unavailable","Uncoded")) %>% 
+     filter(ContDesc != "Loan Proceeds") %>% 
      filter(FullName != "") %>% 
      filter(!FullName %in% fullInd$FullName & !FullName %in% fullInd2$FullName) %>% 
      group_by(FullName,Industry) %>% 
@@ -267,6 +271,7 @@ nameInd <- bind_rows(fullInd,fullInd2,fullInd3); rm(fullInd,fullInd2,fullInd3)
 
 
 fullInd <- dfx %>% filter(!Industry2 %in% c("Unavailable","Uncoded","Unemployed","Retired","Self Employed")) %>% 
+     filter(ContDesc != "Loan Proceeds") %>% 
      group_by(FullName,Industry2) %>% 
      summarise(Total = sum(Amount, na.rm = TRUE)) %>% 
      ungroup() %>% 
@@ -278,6 +283,7 @@ fullInd <- dfx %>% filter(!Industry2 %in% c("Unavailable","Uncoded","Unemployed"
      select(-c(Total,Rnk)); head(fullInd)
 
 fullInd2 <- dfx %>% filter(!Industry2 %in% c("Unavailable","Uncoded")) %>% 
+     filter(ContDesc != "Loan Proceeds") %>% 
      filter(FullName != "") %>% 
      filter(!FullName %in% fullInd$FullName) %>% 
      group_by(FullName,Industry2) %>% 
@@ -291,6 +297,7 @@ fullInd2 <- dfx %>% filter(!Industry2 %in% c("Unavailable","Uncoded")) %>%
      select(-c(Total,Rnk)); head(fullInd2)
 
 fullInd3 <- dfx %>% #filter(!Industry %in% c("Unavailable","Uncoded")) %>% 
+     filter(ContDesc != "Loan Proceeds") %>% 
      filter(FullName != "") %>% 
      filter(!FullName %in% fullInd$FullName & !FullName %in% fullInd2$FullName) %>% 
      group_by(FullName,Industry2) %>% 
@@ -306,6 +313,165 @@ fullInd3 <- dfx %>% #filter(!Industry %in% c("Unavailable","Uncoded")) %>%
 nameInd2 <- bind_rows(fullInd,fullInd2,fullInd3); rm(fullInd,fullInd2,fullInd3)
 
 ind_lookup <- full_join(nameInd,nameInd2, by = "FullName")
+
+
+
+fullEmp1 <- dfx %>% 
+     #filter(FullName == "Mattiello, Nicholas") %>% 
+     filter(!Industry2 %in% c("Unavailable","Uncoded","Unemployed","Retired","Self Employed")) %>% 
+     filter(ContDesc != "Loan Proceeds") %>% 
+     group_by(FullName,Employer) %>% 
+     summarise(Total = sum(Amount, na.rm = TRUE)) %>% 
+     ungroup() %>% 
+     arrange(FullName,desc(Total)) %>% 
+     group_by(FullName) %>% 
+     mutate(Rnk = rank(desc(Total), ties.method = "first")) %>% 
+     ungroup() %>% 
+     filter(Rnk == 1) %>% 
+     select(-c(Total,Rnk)); head(fullEmp1)
+
+fullEmp2 <- dfx %>% filter(!Industry2 %in% c("Unavailable","Uncoded")) %>% 
+     filter(ContDesc != "Loan Proceeds") %>% 
+     #filter(FullName != "") %>% 
+     filter(!FullName %in% fullEmp1$FullName) %>% 
+     group_by(FullName,Employer) %>% 
+     summarise(Total = sum(Amount, na.rm = TRUE)) %>% 
+     ungroup() %>% 
+     arrange(FullName,desc(Total)) %>% 
+     group_by(FullName) %>% 
+     mutate(Rnk = rank(desc(Total), ties.method = "first")) %>% 
+     ungroup() %>% 
+     filter(Rnk == 1) %>% 
+     select(-c(Total,Rnk)); tail(fullEmp2)
+
+fullEmp3 <- dfx %>% #filter(!Industry %in% c("Unavailable","Uncoded")) %>% 
+     filter(ContDesc != "Loan Proceeds") %>% 
+     filter(FullName != "" & Employer != "") %>% 
+     filter(!FullName %in% fullEmp1$FullName & !FullName %in% fullEmp2$FullName) %>% 
+     group_by(FullName,Employer) %>% 
+     summarise(Total = sum(Amount, na.rm = TRUE)) %>% 
+     ungroup() %>% 
+     arrange(FullName,desc(Total)) %>% 
+     group_by(FullName) %>% 
+     mutate(Rnk = rank(desc(Total), ties.method = "first")) %>% 
+     ungroup() %>% 
+     filter(Rnk == 1) %>% 
+     select(-c(Total,Rnk)); head(fullEmp3)
+
+empNames <- bind_rows(fullEmp1, fullEmp2, fullEmp3); rm(fullEmp1, fullEmp2, fullEmp3); head(empNames)
+
+
+
+
+
+empInd1 <- dfx %>% filter(!Industry2 %in% c("Unavailable","Uncoded","Unemployed","Retired","Self Employed")) %>% 
+     filter(ContDesc != "Loan Proceeds") %>% 
+     group_by(Employer,Industry) %>% 
+     summarise(Total = sum(Amount, na.rm = TRUE)) %>% 
+     ungroup() %>% 
+     arrange(Employer,desc(Total)) %>% 
+     group_by(Employer) %>% 
+     mutate(Rnk = rank(desc(Total), ties.method = "first")) %>% 
+     ungroup() %>% 
+     filter(Rnk == 1) %>% 
+     select(-c(Total,Rnk)); head(empInd1)
+
+empInd2 <- dfx %>% filter(!Industry2 %in% c("Unavailable","Uncoded")) %>% 
+     filter(ContDesc != "Loan Proceeds") %>% 
+     filter(FullName != "") %>% 
+     filter(!Employer %in% empInd1$Employer) %>% 
+     group_by(Employer, Industry) %>% 
+     summarise(Total = sum(Amount, na.rm = TRUE)) %>% 
+     ungroup() %>% 
+     arrange(Employer,desc(Total)) %>% 
+     group_by(Employer) %>% 
+     mutate(Rnk = rank(desc(Total), ties.method = "first")) %>% 
+     ungroup() %>% 
+     filter(Rnk == 1) %>% 
+     select(-c(Total,Rnk)); tail(empInd2)
+
+empInd3 <- dfx %>% #filter(!Industry %in% c("Unavailable","Uncoded")) %>% 
+#     filter(ContDesc != "Loan Proceeds") %>% 
+     filter(Employer != "") %>% 
+     filter(!Employer %in% empInd1$Employer & !Employer %in% empInd2$Employer) %>% 
+     group_by(Employer,Industry) %>% 
+     summarise(Total = sum(Amount, na.rm = TRUE)) %>% 
+     ungroup() %>% 
+     arrange(Employer,desc(Total)) %>% 
+     group_by(Employer) %>% 
+     mutate(Rnk = rank(desc(Total), ties.method = "first")) %>% 
+     ungroup() %>% 
+     filter(Rnk == 1) %>% 
+     select(-c(Total,Rnk)); head(empInd3)
+
+empInds <- bind_rows(empInd1, empInd2, empInd3); rm(empInd1, empInd2, empInd3); head(empInds)
+
+
+
+
+empInd21 <- dfx %>% filter(!Industry2 %in% c("Unavailable","Uncoded","Unemployed","Retired","Self Employed")) %>% 
+     filter(ContDesc != "Loan Proceeds") %>% 
+     group_by(Employer,Industry2) %>% 
+     summarise(Total = sum(Amount, na.rm = TRUE)) %>% 
+     ungroup() %>% 
+     arrange(Employer,desc(Total)) %>% 
+     group_by(Employer) %>% 
+     mutate(Rnk = rank(desc(Total), ties.method = "first")) %>% 
+     ungroup() %>% 
+     filter(Rnk == 1) %>% 
+     select(-c(Total,Rnk)); head(empInd21)
+
+empInd22 <- dfx %>% filter(!Industry2 %in% c("Unavailable","Uncoded")) %>% 
+     filter(ContDesc != "Loan Proceeds") %>% 
+     filter(FullName != "") %>% 
+     filter(!Employer %in% empInd21$Employer) %>% 
+     group_by(Employer, Industry2) %>% 
+     summarise(Total = sum(Amount, na.rm = TRUE)) %>% 
+     ungroup() %>% 
+     arrange(Employer,desc(Total)) %>% 
+     group_by(Employer) %>% 
+     mutate(Rnk = rank(desc(Total), ties.method = "first")) %>% 
+     ungroup() %>% 
+     filter(Rnk == 1) %>% 
+     select(-c(Total,Rnk)); tail(empInd22)
+
+empInd23 <- dfx %>% #filter(!Industry2 %in% c("Unavailable","Uncoded")) %>% 
+#     filter(ContDesc != "Loan Proceeds") %>% 
+     filter(Employer != "") %>% 
+     filter(!Employer %in% empInd21$Employer & !Employer %in% empInd22$Employer) %>% 
+     group_by(Employer,Industry2) %>% 
+     summarise(Total = sum(Amount, na.rm = TRUE)) %>% 
+     ungroup() %>% 
+     arrange(Employer,desc(Total)) %>% 
+     group_by(Employer) %>% 
+     mutate(Rnk = rank(desc(Total), ties.method = "first")) %>% 
+     ungroup() %>% 
+     filter(Rnk == 1) %>% 
+     select(-c(Total,Rnk)); head(empInd23)
+
+empInds2 <- bind_rows(empInd21, empInd22, empInd23); rm(empInd21, empInd22, empInd23); head(empInds2)
+
+
+general <- full_join(empNames, empInds, by = "Employer") %>% 
+     full_join(empInds2, by = "Employer") %>% 
+     rename(TopEmployer = Employer, TopIndustry = Industry, TopIndustry2 = Industry2); head(general)
+
+
+vizTop <- dfx %>% 
+     filter(FullName != "") %>% 
+     filter(ContDesc != "Loan Proceeds") %>% 
+     #mutate(Loans = ifelse(ContDesc == "Loan Proceeds", "Loan", "Not a Loan")) %>% 
+     group_by(FullName,OrganizationName,CY) %>% 
+     summarise(Total = sum(Amount, na.rm = TRUE)) %>% 
+     ungroup() %>% 
+     arrange(FullName, CY) %>% 
+     left_join(general, by = "FullName"); head(vizTop)
+
+
+
+# Save
+saveRDS(vizTop, paste(dir, "vizTop.rds", sep = ""))
+
 
 # Clear
 rm(nameInd,nameInd2)
