@@ -866,11 +866,42 @@ ui <- fluidPage(useShinyjs(),#tweaks,
                                                                  #br(),
                                                                  fluidRow(uiOutput("git_add")),
                                                                  br(),
-                                                                 #fluidRow("")
+                                                                 fluidRow(h5("Other Rhode Island Open Data")),
+                                                                 br(),
+                                                                 fluidRow(h5("RI.gov is the official government Web portal for the State of Rhode Island. It’s built by a team dedicated to developing online services to enable citizens or businesses to complete tasks online."), 
+                                                                          uiOutput("rigov_add")),
+                                                                 br(),
+                                                                 fluidRow(h5("State of Rhode Island Open Government Transparency"), uiOutput("riopen_add")),
+                                                                 br(),
+                                                                 fluidRow(h5("Welcome to the City of Providence’s Open Data Portal"), uiOutput("provdata_add")),
                                                                  br()),
                                                         tabPanel("Helpful Links",
                                                                  br(),
-                                                                 fluidRow(h5("Lobby View"), uiOutput("lobbyview_add")),
+                                                                 fluidRow(h5("Common Cause RI - Leading the fight for open, ethical, accountable, and effective government"), uiOutput("commonCause_add")),
+                                                                 br(),
+                                                                 fluidRow(h5("LobbyView: Firm-level Lobbying & Congressional Bills Database."), uiOutput("lobbyview_add")),
+                                                                 br(),
+                                                                 fluidRow(h5("The Sunlight Foundation - Making government & politics more accountable & transparent"), uiOutput("sunlight_add")),
+                                                                 br(),
+                                                                 fluidRow(h5("Vote Smart - The Voter's Self Defense System.  Facts Matter"), uiOutput("voteSmart_add")),
+                                                                 br(),
+                                                                 fluidRow(h5("National Conference of State Legislatures"), uiOutput("coalition_add")),
+                                                                 br(),
+                                                                 fluidRow(h5("Open the Government - Americans for Less Secrecy, More Democracy"), uiOutput("openthegov_add")),
+                                                                 br(),
+                                                                 fluidRow(h5("The nonpartisan, nonprofit National Institute on Money in Politics promotes an accountable democracy by compiling comprehensive campaign-donor, lobbyist, and other information from government disclosure agencies nationwide and making it freely available at FollowTheMoney.org."),
+                                                                          uiOutput("follow_add")),
+                                                                 #br(),
+                                                                 #fluidRow(h5("National Institute on Money in State Politics"), uiOutput("nationalinst_add")),
+                                                                 fluidRow(h5("Airwars - Monitoring and assessing civilian harm from airpower-dominated international military actions. Seeking transparency and accountability from belligerents, and advocating on behalf of affected non-combatants. Archiving open-source casualty reports, and military claims by nations."),
+                                                                          uiOutput("airwars_add")),
+                                                                 br(),
+                                                                 # fluidRow(h5("Lobby View"), uiOutput("riopen_add")),
+                                                                 # br(),
+                                                                 # fluidRow(h5("Lobby View"), uiOutput("riopen_add")),
+                                                                 # br(),
+                                                                 # fluidRow(h5("Lobby View"), uiOutput("riopen_add")),
+                                                                 # br(),
                                                                  br()))))), position = "left"))
 # 
 #                                           tabPanel("About", 
@@ -893,12 +924,18 @@ ui <- fluidPage(useShinyjs(),#tweaks,
 
 server <- function(input, output, session) {
      
-     boe_link <- a("http://www.elections.state.ri.us", href = "http://www.elections.state.ri.us")
-     con_link <- a("link to contributions", href = "http://ricampaignfinance.com/RIPublic/Contributions.aspx")
-     exp_link <- a("link to expenditures", href = "http://ricampaignfinance.com/RIPublic/Expenditures.aspx")
-     auth_email <- a("Contact", href = "www.psephology@protonmail.com")
-     git_link <- a("Github repository", href = "https://github.com/RI-Psephology/Campaign_Finance")
-     lobbyview_link <- a("Lobby View", href = "https://www.lobbyview.org/#!/")
+     # Program Description
+     boe_link <- a("http://www.elections.state.ri.us", href = "http://www.elections.state.ri.us", target = "_blank")
+     con_link <- a("link to contributions", href = "http://ricampaignfinance.com/RIPublic/Contributions.aspx", target = "_blank")
+     exp_link <- a("link to expenditures", href = "http://ricampaignfinance.com/RIPublic/Expenditures.aspx", target = "_blank")
+     auth_email <- a("Contact", href = "www.psephology@protonmail.com", target = "_blank")
+     git_link <- a("Github repository", href = "https://github.com/RI-Psephology/Campaign_Finance", target = "_blank")
+     
+     # Rhode Island Links
+     rigov_link <- a("RI Gov", href = "https://www.ri.gov/data/", target = "_blank")
+     riopen_link <- a("RI Open Gov Transparency", href = "https://www.ri.gov/opengovernment/", target = "_blank")
+     provdata_link <- a("Providence Open Data", href = "https://data.providenceri.gov/", target = "_blank")
+     
      
      output$boe_add <- renderUI({
           tagList(boe_link)
@@ -915,6 +952,79 @@ server <- function(input, output, session) {
      output$git_add <- renderUI({
           tagList(git_link)
      })
+     
+     output$provdata_add <- renderUI({
+          tagList(provdata_link)
+     })
+     
+     output$riopen_add <- renderUI({
+          tagList(riopen_link)
+     })
+     
+     output$rigov_add <- renderUI({
+          tagList(rigov_link)
+     })
+     
+     # Other Helpful Links
+     lobbyview_link <- a("Lobby View", href = "https://www.lobbyview.org/#!/", target = "_blank")
+     commonCause_link <- a("Common Cause RI", href = "https://www.commoncause.org/rhode-island/", target = "_blank")
+     sunlight_link <- a("The Sunlight Foundation", href = "https://sunlightfoundation.com/", target = "_blank")
+     voteSmart_link <- a("Vote Smart", href = "https://votesmart.org/", target = "_blank")
+     coalition_link <- a("NCSL", "http://www.ncsl.org/research/elections-and-campaigns/campaign-finance-an-overview.aspx", target = "_blank")
+     follow_link <- a("Follow the Money", href = "https://www.followthemoney.org/", target = "_blank")
+     openthegov_link <- a("Open the Government", href = "https://www.openthegovernment.org/node/1051", target = "_blank")
+     airwars_link <- a("Airwars", href = "https://airwars.org/", target = "_blank")
+     natConf_link <- a("NIMSP", href = "https://data.providenceri.gov/", target = "_blank")
+     
+     # x_link <- a("Link", href = "wwwwwwwww.com", target = "_blank")
+     # x_link <- a("Link", href = "wwwwwwwww.com")
+     # x_link <- a("Link", href = "wwwwwwwww.com")
+     # x_link <- a("Link", href = "wwwwwwwww.com")
+     # x_link <- a("Link", href = "wwwwwwwww.com")
+     # x_link <- a("Link", href = "wwwwwwwww.com")
+     # x_link <- a("Link", href = "wwwwwwwww.com")
+     
+     output$lobbyview_add <- renderUI({
+          tagList(lobbyview_link)
+     })
+     
+     output$commonCause_add <- renderUI({
+          tagList(commonCause_link)
+     })
+     
+     output$sunlight_add <- renderUI({
+          tagList(sunlight_link)
+     })
+     
+     output$voteSmart_add <- renderUI({
+          tagList(voteSmart_link)
+     })
+     
+     output$coalition_add <- renderUI({
+          tagList(coalition_link)
+     })
+     
+     output$follow_add <- renderUI({
+          tagList(follow_link)
+     })
+     
+     # output$nationalinst_add <- renderUI({
+     #      tagList(nationalinst_link)
+     # })
+     
+     output$openthegov_add <- renderUI({
+          tagList(openthegov_link)
+     })
+     
+     output$airwars_add <- renderUI({
+          tagList(airwars_link)
+     })
+     
+     # 
+     # output$z_add <- renderUI({
+     #      tagList(z_link)
+     # })
+     # 
      
      
      # output$auth_add <- renderUI({
