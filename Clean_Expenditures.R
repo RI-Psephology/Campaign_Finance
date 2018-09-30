@@ -212,9 +212,12 @@ dir <- "/Users/jeffreyrichardson/Documents/Campaign_Finance/Psephology_App/"
 # Campaign Finance Expenditures
 df <- readRDS(paste(dir, "Expend_thru_Sep18_2018.rds", sep = "")) %>% distinct() %>% 
      transform(#ExpDate = mdy(ExpDate),
-               OrganizationName = str_to_title(trimws(OrganizationName)),
-               FullName = str_to_lower(trimws(FullName)),
-               Amount = as.numeric(Amount)) %>% 
+          OrganizationName = str_to_title(trimws(OrganizationName)),
+          FullName = str_to_lower(trimws(FullName)),
+          OSAP = as.numeric(OSAP),
+          PmtDate = mdy(PmtDate),
+          ZeroedByCF7 = str_to_upper(ZeroedByCF7),
+          Amount = as.numeric(Amount)) %>% distinct() %>%  
      transform(FullName = gsub(",llc", ", llc", FullName)) %>% 
      transform(FullName = gsub("\\s{2,}", " ", FullName)) %>% 
      transform(FullName = gsub("\\'", "", FullName)) %>% 
