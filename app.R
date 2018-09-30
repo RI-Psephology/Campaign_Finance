@@ -656,29 +656,6 @@ ui <- fluidPage(useShinyjs(),#tweaks,
                                           #                        fluidRow(div(DT::dataTableOutput("gov18_donorSt_tbl"), style = "font-size:90%"))))),
                                           tabPanel("Network Vis",
                                                    tabsetPanel(
-                                                        tabPanel("Filter Network",
-                                                                 fluidRow(column(width = 4, sliderInput("slider_dViz", "Observations", min = 5, max = 1000, value = 40)),
-                                                                          column(width = 2, radioButtons("layout_dViz", label = "Type of Layout",inline = FALSE,
-                                                                                                         choices = c("spring","circle"), selected = "spring")),
-                                                                          column(width = 2, radioButtons("colorBy_dViz", label = "Color By",inline = FALSE,
-                                                                                                         choices = c("Making Contribution", "Receiving Contribution"), selected = "Receiving Contribution")),
-                                                                          column(width = 4, sliderInput("vertexSize_dViz", "Node Size", min = 0.01, max = 10, value = 2))),
-                                                                 fluidRow(column(width = 4, sliderInput("edgeLabSlide_dViz", "Edge Label Size", min = 0.01, max = 3, value = 0.45)),
-                                                                          column(width = 2, checkboxInput("dViz_fade", "Fade", value = FALSE)),
-                                                                          column(width = 2, radioButtons("dViz_bg", "Background", inline = TRUE,
-                                                                                                         choices = c("Dark","Light"))),
-                                                                          column(width = 4, sliderInput("nodeSlide_dViz", "Node Label Size", min = 0.01, max = 20, value = 5))),
-                                                                 fluidRow(column(width = 6,
-                                                                                 radioButtons("dViz_Filter", label = h5("Filter to Specific"), 
-                                                                                                    choices = c("Donor","Candidate","Employer","Industry","SubIndustry","No Filters"),
-                                                                                                    selected = NULL, inline = TRUE)),
-                                                                          column(width = 6,
-                                                                                 conditionalPanel(
-                                                                                      condition = "input.dViz_Filter != 'No Filters'",
-                                                                                      selectInput("dViz_Select", "Choose", choices = "")))),
-                                                                 #column(width = 4, radioButtons("viz_loans", "Include Loans?", choices = c("Include Loans", "Remove Loans"), selected = "Remove Loans"))),
-                                                                 fluidRow(plotOutput("dViz_plot", height = "600px")),
-                                                                 fluidRow(div(DT::dataTableOutput("dViz_tbl"), style = "font-size:90%"))),
                                                         # tabPanel("by Employer", 
                                                         #          #br(),
                                                         #          br(),
@@ -732,40 +709,40 @@ ui <- fluidPage(useShinyjs(),#tweaks,
                                                                  #                                                                 br(),
                                                                  fluidRow(plotOutput("visOrg_plot", height = "600px")),
                                                                  fluidRow(div(DT::dataTableOutput("visOrg_tbl"), style = "font-size:90%"))),
+                                                        # tabPanel("by Employer",
+                                                        #          fluidRow(column(width = 4, sliderInput("slider_viz_emp", "Observations", min = 5, max = 1000, value = 40)),
+                                                        #                   column(width = 4, radioButtons("layout_viz_emp", label = "Type of Layout",inline = TRUE,
+                                                        #                                                  choices = c("spring","circle"), selected = "spring")),
+                                                        #                   column(width = 4, sliderInput("vertexSize_viz_emp", "Node Size", min = 0.01, max = 10, value = 2))),
+                                                        #          fluidRow(column(width = 4, sliderInput("edgeLabSlide_viz_emp", "Edge Label Size", min = 0.01, max = 3, value = 0.45)),
+                                                        #                   column(width = 4, checkboxInput("viz_emp_fade", "Fade", value = FALSE)),
+                                                        #                   column(width = 4, sliderInput("nodeSlide_viz_emp", "Node Label Size", min = 0.01, max = 20, value = 5))),
+                                                        #          #        fluidRow(sliderInput("slider_viz_emp", "Observations", min = 5, max = 1000, value = 40)),
+                                                        #          #        fluidRow(sliderInput("vertexSize_viz_emp", "Node Size", min = 0.01, max = 10, value = 2))),
+                                                        #          # #column(width = 1),
+                                                        #          # column(width = 4,
+                                                        #          #        fluidRow(radioButtons("layout_viz_emp", label = "Type of Layout",inline = FALSE,
+                                                        #          #                              choices = c("spring","circle"),
+                                                        #          #                              selected = "spring")),#,
+                                                        #          #        fluidRow(sliderInput("labelPos_viz_emp", label = "Edge Label Position",min = 0.01, max = 0.95, value = 0.5))),
+                                                        #          # #column(width = 1),
+                                                        #          # column(width = 4,
+                                                        #          #        fluidRow(sliderInput("nodeSlide_viz_emp", "Node Label Size", min = 0.01, max = 20, value = 5)),
+                                                        #          #        fluidRow(sliderInput("edgeLabSlide_viz_emp", "Edge Label Size", min = 0.01, max = 3, value = 0.45)))),
+                                                        #          fluidRow(column(width = 4,
+                                                        #                          checkboxInput("viz_emp_box", h5("Filter to Specific Industry")),
+                                                        #                          conditionalPanel(
+                                                        #                               condition = "input.viz_emp_box == true",
+                                                        #                               selectInput("viz_emp_inds", "Select Industry", choices = ""))),# choices = industries, selected = "Healthcare",multiple = FALSE, selectize = TRUE))),
+                                                        #                   column(width = 4,
+                                                        #                          conditionalPanel(
+                                                        #                               condition = "input.viz_emp_box == true",
+                                                        #                               radioButtons("viz_emp_ind", "Industry or Sub-Industry", choices = c("Industry","SubIndustry"), selected = "Industry"))),
+                                                        #                   column(width = 4,
+                                                        #                          radioButtons("viz_loans", "Include Loans?", choices = c("Include Loans", "Remove Loans"), selected = "Remove Loans"))),
+                                                        #          fluidRow(plotOutput("viz_emp_plot", height = "600px")),
+                                                        #          fluidRow(div(DT::dataTableOutput("viz_emp_tbl"), style = "font-size:90%"))),
                                                         tabPanel("by Employer",
-                                                                 fluidRow(column(width = 4, sliderInput("slider_viz_emp", "Observations", min = 5, max = 1000, value = 40)),
-                                                                          column(width = 4, radioButtons("layout_viz_emp", label = "Type of Layout",inline = TRUE,
-                                                                                                         choices = c("spring","circle"), selected = "spring")),
-                                                                          column(width = 4, sliderInput("vertexSize_viz_emp", "Node Size", min = 0.01, max = 10, value = 2))),
-                                                                 fluidRow(column(width = 4, sliderInput("edgeLabSlide_viz_emp", "Edge Label Size", min = 0.01, max = 3, value = 0.45)),
-                                                                          column(width = 4, checkboxInput("viz_emp_fade", "Fade", value = FALSE)),
-                                                                          column(width = 4, sliderInput("nodeSlide_viz_emp", "Node Label Size", min = 0.01, max = 20, value = 5))),
-                                                                 #        fluidRow(sliderInput("slider_viz_emp", "Observations", min = 5, max = 1000, value = 40)),
-                                                                 #        fluidRow(sliderInput("vertexSize_viz_emp", "Node Size", min = 0.01, max = 10, value = 2))),
-                                                                 # #column(width = 1),
-                                                                 # column(width = 4,
-                                                                 #        fluidRow(radioButtons("layout_viz_emp", label = "Type of Layout",inline = FALSE,
-                                                                 #                              choices = c("spring","circle"),
-                                                                 #                              selected = "spring")),#,
-                                                                 #        fluidRow(sliderInput("labelPos_viz_emp", label = "Edge Label Position",min = 0.01, max = 0.95, value = 0.5))),
-                                                                 # #column(width = 1),
-                                                                 # column(width = 4,
-                                                                 #        fluidRow(sliderInput("nodeSlide_viz_emp", "Node Label Size", min = 0.01, max = 20, value = 5)),
-                                                                 #        fluidRow(sliderInput("edgeLabSlide_viz_emp", "Edge Label Size", min = 0.01, max = 3, value = 0.45)))),
-                                                                 fluidRow(column(width = 4,
-                                                                                 checkboxInput("viz_emp_box", h5("Filter to Specific Industry")),
-                                                                                 conditionalPanel(
-                                                                                      condition = "input.viz_emp_box == true",
-                                                                                      selectInput("viz_emp_inds", "Select Industry", choices = ""))),# choices = industries, selected = "Healthcare",multiple = FALSE, selectize = TRUE))),
-                                                                          column(width = 4,
-                                                                                 conditionalPanel(
-                                                                                      condition = "input.viz_emp_box == true",
-                                                                                      radioButtons("viz_emp_ind", "Industry or Sub-Industry", choices = c("Industry","SubIndustry"), selected = "Industry"))),
-                                                                          column(width = 4,
-                                                                                 radioButtons("viz_loans", "Include Loans?", choices = c("Include Loans", "Remove Loans"), selected = "Remove Loans"))),
-                                                                 fluidRow(plotOutput("viz_emp_plot", height = "600px")),
-                                                                 fluidRow(div(DT::dataTableOutput("viz_emp_tbl"), style = "font-size:90%"))),
-                                                        tabPanel("by Employer2",
                                                                  fluidRow(column(width = 4, sliderInput("slider_viz_emp2", "Observations", min = 5, max = 1000, value = 40)),
                                                                           column(width = 2, radioButtons("layout_viz_emp2", label = "Type of Layout",inline = FALSE,
                                                                                                          choices = c("spring","circle"), selected = "spring")),
@@ -805,7 +782,30 @@ ui <- fluidPage(useShinyjs(),#tweaks,
                                                                                       condition = "input.viz_exp_net_box == true",
                                                                                       selectInput("viz_exp_net", "Expenditure Description", choices = exp_dex)))),
                                                                  fluidRow(plotOutput("exp_net_plot", height = "700px")),
-                                                                 fluidRow(div(DT::dataTableOutput("exp_net_tbl"), style = "font-size:90%"))))),
+                                                                 fluidRow(div(DT::dataTableOutput("exp_net_tbl"), style = "font-size:90%"))),
+                                                        tabPanel("In Development",
+                                                                 fluidRow(column(width = 4, sliderInput("slider_dViz", "Observations", min = 5, max = 1000, value = 40)),
+                                                                          column(width = 2, radioButtons("layout_dViz", label = "Type of Layout",inline = FALSE,
+                                                                                                         choices = c("spring","circle"), selected = "spring")),
+                                                                          column(width = 2, radioButtons("colorBy_dViz", label = "Color By",inline = FALSE,
+                                                                                                         choices = c("Making Contribution", "Receiving Contribution"), selected = "Receiving Contribution")),
+                                                                          column(width = 4, sliderInput("vertexSize_dViz", "Node Size", min = 0.01, max = 10, value = 2))),
+                                                                 fluidRow(column(width = 4, sliderInput("edgeLabSlide_dViz", "Edge Label Size", min = 0.01, max = 3, value = 0.45)),
+                                                                          column(width = 2, checkboxInput("dViz_fade", "Fade", value = FALSE)),
+                                                                          column(width = 2, radioButtons("dViz_bg", "Background", inline = TRUE,
+                                                                                                         choices = c("Dark","Light"))),
+                                                                          column(width = 4, sliderInput("nodeSlide_dViz", "Node Label Size", min = 0.01, max = 20, value = 5))),
+                                                                 fluidRow(column(width = 6,
+                                                                                 radioButtons("dViz_Filter", label = h5("Filter to Specific"), 
+                                                                                              choices = c("Donor","Candidate","Employer","Industry","SubIndustry","No Filters"),
+                                                                                              selected = NULL, inline = TRUE)),
+                                                                          column(width = 6,
+                                                                                 conditionalPanel(
+                                                                                      condition = "input.dViz_Filter != 'No Filters'",
+                                                                                      selectInput("dViz_Select", "Choose", choices = "")))),
+                                                                 #column(width = 4, radioButtons("viz_loans", "Include Loans?", choices = c("Include Loans", "Remove Loans"), selected = "Remove Loans"))),
+                                                                 fluidRow(plotOutput("dViz_plot", height = "600px")),
+                                                                 fluidRow(div(DT::dataTableOutput("dViz_tbl"), style = "font-size:90%"))))),
                                           tabPanel("Misc",
                                                    tabsetPanel(
                                                         tabPanel("Time Series",
@@ -866,12 +866,14 @@ ui <- fluidPage(useShinyjs(),#tweaks,
                                                                  #br(),
                                                                  fluidRow(uiOutput("git_add")),
                                                                  br(),
-                                                                 fluidRow(h5("Other Rhode Island Open Data")),
+                                                                 fluidRow(h4("Other Rhode Island Open Data")),
                                                                  br(),
                                                                  fluidRow(h5("RI.gov is the official government Web portal for the State of Rhode Island. It’s built by a team dedicated to developing online services to enable citizens or businesses to complete tasks online."), 
                                                                           uiOutput("rigov_add")),
                                                                  br(),
                                                                  fluidRow(h5("State of Rhode Island Open Government Transparency"), uiOutput("riopen_add")),
+                                                                 br(),
+                                                                 fluidRow(h5("RI Secretary of State Open Government"), uiOutput("sos_add")),
                                                                  br(),
                                                                  fluidRow(h5("Welcome to the City of Providence’s Open Data Portal"), uiOutput("provdata_add")),
                                                                  br()),
@@ -881,6 +883,8 @@ ui <- fluidPage(useShinyjs(),#tweaks,
                                                                  br(),
                                                                  fluidRow(h5("LobbyView: Firm-level Lobbying & Congressional Bills Database."), uiOutput("lobbyview_add")),
                                                                  br(),
+                                                                 fluidRow(h5("Data.Gov - The home of the U.S. Government’s open data"), uiOutput("usgov_add")),
+                                                                 br(),
                                                                  fluidRow(h5("The Sunlight Foundation - Making government & politics more accountable & transparent"), uiOutput("sunlight_add")),
                                                                  br(),
                                                                  fluidRow(h5("Vote Smart - The Voter's Self Defense System.  Facts Matter"), uiOutput("voteSmart_add")),
@@ -889,19 +893,17 @@ ui <- fluidPage(useShinyjs(),#tweaks,
                                                                  br(),
                                                                  fluidRow(h5("Open the Government - Americans for Less Secrecy, More Democracy"), uiOutput("openthegov_add")),
                                                                  br(),
-                                                                 fluidRow(h5("The nonpartisan, nonprofit National Institute on Money in Politics promotes an accountable democracy by compiling comprehensive campaign-donor, lobbyist, and other information from government disclosure agencies nationwide and making it freely available at FollowTheMoney.org."),
+                                                                 fluidRow(h5("The National Institute on Money in Politics promotes an accountable democracy by compiling comprehensive campaign-donor, lobbyist, and other info from govt disclosure agencies nationwide and making it freely available at FollowTheMoney.org."),
                                                                           uiOutput("follow_add")),
-                                                                 #br(),
+                                                                 br(),
                                                                  #fluidRow(h5("National Institute on Money in State Politics"), uiOutput("nationalinst_add")),
-                                                                 fluidRow(h5("Airwars - Monitoring and assessing civilian harm from airpower-dominated international military actions. Seeking transparency and accountability from belligerents, and advocating on behalf of affected non-combatants. Archiving open-source casualty reports, and military claims by nations."),
+                                                                 fluidRow(h5("Airwars - Monitoring and assessing civilian harm from airpower-dominated international military actions.  Archiving open-source casualty reports, and military claims by nations."),
                                                                           uiOutput("airwars_add")),
                                                                  br(),
-                                                                 # fluidRow(h5("Lobby View"), uiOutput("riopen_add")),
-                                                                 # br(),
-                                                                 # fluidRow(h5("Lobby View"), uiOutput("riopen_add")),
-                                                                 # br(),
-                                                                 # fluidRow(h5("Lobby View"), uiOutput("riopen_add")),
-                                                                 # br(),
+                                                                 fluidRow(hr("Something to Strive For:")),
+                                                                 br(),
+                                                                 fluidRow(h5("Virginia Public Access Project - Your window into Virginia politics"), uiOutput("vpap_add")),
+                                                                 br(),
                                                                  br()))))), position = "left"))
 # 
 #                                           tabPanel("About", 
@@ -935,6 +937,7 @@ server <- function(input, output, session) {
      rigov_link <- a("RI Gov", href = "https://www.ri.gov/data/", target = "_blank")
      riopen_link <- a("RI Open Gov Transparency", href = "https://www.ri.gov/opengovernment/", target = "_blank")
      provdata_link <- a("Providence Open Data", href = "https://data.providenceri.gov/", target = "_blank")
+     sos_link <- a("RI SOS", href = "http://sos.ri.gov/divisions/open-government", target = "_blank")
      
      
      output$boe_add <- renderUI({
@@ -970,14 +973,13 @@ server <- function(input, output, session) {
      commonCause_link <- a("Common Cause RI", href = "https://www.commoncause.org/rhode-island/", target = "_blank")
      sunlight_link <- a("The Sunlight Foundation", href = "https://sunlightfoundation.com/", target = "_blank")
      voteSmart_link <- a("Vote Smart", href = "https://votesmart.org/", target = "_blank")
-     coalition_link <- a("NCSL", "http://www.ncsl.org/research/elections-and-campaigns/campaign-finance-an-overview.aspx", target = "_blank")
+     coalition_link <- a("NCSL", href = "http://www.ncsl.org/research/elections-and-campaigns/campaign-finance-an-overview.aspx", target = "_blank")
      follow_link <- a("Follow the Money", href = "https://www.followthemoney.org/", target = "_blank")
      openthegov_link <- a("Open the Government", href = "https://www.openthegovernment.org/node/1051", target = "_blank")
      airwars_link <- a("Airwars", href = "https://airwars.org/", target = "_blank")
      natConf_link <- a("NIMSP", href = "https://data.providenceri.gov/", target = "_blank")
-     
-     # x_link <- a("Link", href = "wwwwwwwww.com", target = "_blank")
-     # x_link <- a("Link", href = "wwwwwwwww.com")
+     usgov_link <- a("Data.gov", href = "https://www.data.gov/", target = "_blank")
+     vpap_link <- a("VPAP", href = "https://www.vpap.org/")
      # x_link <- a("Link", href = "wwwwwwwww.com")
      # x_link <- a("Link", href = "wwwwwwwww.com")
      # x_link <- a("Link", href = "wwwwwwwww.com")
@@ -1008,9 +1010,9 @@ server <- function(input, output, session) {
           tagList(follow_link)
      })
      
-     # output$nationalinst_add <- renderUI({
-     #      tagList(nationalinst_link)
-     # })
+     output$sos_add <- renderUI({
+          tagList(sos_link)
+     })
      
      output$openthegov_add <- renderUI({
           tagList(openthegov_link)
@@ -1020,11 +1022,15 @@ server <- function(input, output, session) {
           tagList(airwars_link)
      })
      
-     # 
-     # output$z_add <- renderUI({
-     #      tagList(z_link)
-     # })
-     # 
+
+     output$usgov_add <- renderUI({
+          tagList(usgov_link)
+     })
+     
+     output$vpap_add <- renderUI({
+          tagList(vpap_link)
+     })
+     
      
      
      # output$auth_add <- renderUI({
@@ -1812,7 +1818,7 @@ server <- function(input, output, session) {
           
           #xLabs <- ifelse(ve$weight >= quantile(ve$weight, probs = 0.1), monify(ve$weight), "")
           xLabs <- monify(ve$weight)
-          elabPos <- ifelse(input$layout_viz_emp == "spring", 0.5, 0.8)
+          elabPos <- ifelse(input$layout_viz_emp2 == "spring", 0.5, 0.8)
           
           suppressWarnings(
                qgraph(ve,
@@ -1841,107 +1847,107 @@ server <- function(input, output, session) {
      
      
      # *********************************************************************** Viz Employers
-     
-     observe({
-          updateSelectInput(session,
-                            "viz_emp_inds",
-                            choices = viz_emp %>% filter(View == input$viz_emp_ind) %>%
-                                 select(Industry) %>% distinct() %>% arrange(Industry) %>% 
-                                 .[[1]]
-          )
-     })
-     
-     loanView <- reactive({
-          if(input$viz_emp_ind == "Industry") {
-               if(input$viz_loans == "Not Loan") {
-                    viz_emp %>% filter(Loan == "Not Loan" & View == "Industry")
-               } else {
-                    viz_emp %>% filter(View == "Industry")
-               }
-          } else {
-               if(input$viz_loans == "Not Loan") {
-                    viz_emp %>% filter(Loan == "Not Loan" & View == "SubIndustry")
-               } else {
-                    viz_emp %>% filter(View == "SubIndustry")
-               }
-          }
-     })
-     
-     viz_empx <- reactive({
-          
-          loanView() %>% 
-               filter(CY >= input$sliderRange[1] & CY <= input$sliderRange[2]) %>%
-               mutate(Range = paste("Jan 1, ", min(CY), " to ", ifelse(max(CY) == 2018, upload_date18, upload_date), max(CY), sep = "")) %>%
-               group_by(from,to,Industry,Loans,Range) %>% 
-               summarise(weight = sum(weight, na.rm = TRUE)) %>% 
-               ungroup() %>% 
-               arrange(desc(weight))
-     })
-     
-     
-     output$viz_emp_plot <- renderPlot({
-          set.seed(91)
-          if (input$viz_emp_inds == "") {
-               return()
-          }
-          
-          if(input$viz_emp_box == TRUE) {
-               
-               ve <- viz_empx() %>% 
-                    filter(Industry == input$viz_emp_inds) %>% 
-                    head(input$slider_viz_emp) %>%
-                    transform(from = str_wrap(from, 12),
-                              to = str_wrap(str_to_title(to), 12)) %>%
-                    group_by(to) %>%
-                    mutate(edgeCol = sample(colors()[!colors() %in% grep("^grey[1-2]|^gray[1-2]|^grey[4-6]|^gray[4-6]|^grey[8-9]|7^gray[8-9]", colors(), value = TRUE)], 1)) %>%
-                    ungroup()
-          } else {
-               
-               ve <- viz_empx() %>% 
-                    head(input$slider_viz_emp) %>%
-                    transform(from = str_wrap(from, 12),
-                              to = str_wrap(str_to_title(to), 12)) %>%
-                    group_by(to) %>%
-                    mutate(edgeCol = sample(colors()[!colors() %in% grep("^grey[1-2]|^gray[1-2]|^grey[4-6]|^gray[4-6]|^grey[8-9]|7^gray[8-9]", colors(), value = TRUE)], 1)) %>%
-                    ungroup()
-          }
-          
-          eCol <- ve$edgeCol; dfRange <- unique(ve$Range)
-          
-          d <- data.frame(label = c(ve$from, ve$to), stringsAsFactors = FALSE) %>% distinct() %>%
-               mutate(col = ifelse(label %in% ve$from, "greenyellow","turquoise"),
-                      shp = ifelse(label %in% ve$from, "circle","diamond"))
-          
-          ve <- ve %>% select(from,to,weight)# select(-c(Range,edgeCol))
-          
-          xLabs <- ifelse(ve$weight >= quantile(ve$weight, probs = 0.1), monify(ve$weight), "")
-          
-          elabPos <- ifelse(input$layout_viz_emp == "spring", 0.5, 0.8)
-          
-          suppressWarnings(
-               qgraph(ve,
-                      layout = input$layout_viz_emp,
-                      vsize = input$vertexSize_viz_emp, # Size of the nodes
-                      label.cex = input$nodeSlide_viz_emp, # Size of Node Labels
-                      mar = c(1,1,1,1),
-                      title = paste("Political Connections\n", dfRange, sep = ""),
-                      #lcolor = "ghostwhite", bg = "gray0", edge.label.bg = "lightyellow1",
-                      lcolor = "black", bg = "white", edge.label.bg = "gray90",
-                      #fade = TRUE,
-                      fade = input$viz_emp_fade,
-                      vTrans = 100, asize = 3,
-                      color = d$col, shape = d$shp,
-                      color.main = "whitesmoke",
-                      label.scale.equal = TRUE,
-                      edge.label.color = "navyblue", # Color of the numeric labels
-                      edge.color = eCol,#x2$edgeCol,#"gray50", # Line color
-                      edge.width = 0.75,
-                      edge.label.cex = input$edgeLabSlide_viz_emp,
-                      edge.label.position = elabPos,#input$labelPos_viz_emp,
-                      edge.labels= xLabs))
-     })
-     
-     
+     # 
+     # observe({
+     #      updateSelectInput(session,
+     #                        "viz_emp_inds",
+     #                        choices = viz_emp %>% filter(View == input$viz_emp_ind) %>%
+     #                             select(Industry) %>% distinct() %>% arrange(Industry) %>% 
+     #                             .[[1]]
+     #      )
+     # })
+     # 
+     # loanView <- reactive({
+     #      if(input$viz_emp_ind == "Industry") {
+     #           if(input$viz_loans == "Not Loan") {
+     #                viz_emp %>% filter(Loan == "Not Loan" & View == "Industry")
+     #           } else {
+     #                viz_emp %>% filter(View == "Industry")
+     #           }
+     #      } else {
+     #           if(input$viz_loans == "Not Loan") {
+     #                viz_emp %>% filter(Loan == "Not Loan" & View == "SubIndustry")
+     #           } else {
+     #                viz_emp %>% filter(View == "SubIndustry")
+     #           }
+     #      }
+     # })
+     # 
+     # viz_empx <- reactive({
+     #      
+     #      loanView() %>% 
+     #           filter(CY >= input$sliderRange[1] & CY <= input$sliderRange[2]) %>%
+     #           mutate(Range = paste("Jan 1, ", min(CY), " to ", ifelse(max(CY) == 2018, upload_date18, upload_date), max(CY), sep = "")) %>%
+     #           group_by(from,to,Industry,Loans,Range) %>% 
+     #           summarise(weight = sum(weight, na.rm = TRUE)) %>% 
+     #           ungroup() %>% 
+     #           arrange(desc(weight))
+     # })
+     # 
+     # 
+     # output$viz_emp_plot <- renderPlot({
+     #      set.seed(91)
+     #      if (input$viz_emp_inds == "") {
+     #           return()
+     #      }
+     #      
+     #      if(input$viz_emp_box == TRUE) {
+     #           
+     #           ve <- viz_empx() %>% 
+     #                filter(Industry == input$viz_emp_inds) %>% 
+     #                head(input$slider_viz_emp) %>%
+     #                transform(from = str_wrap(from, 12),
+     #                          to = str_wrap(str_to_title(to), 12)) %>%
+     #                group_by(to) %>%
+     #                mutate(edgeCol = sample(colors()[!colors() %in% grep("^grey[1-2]|^gray[1-2]|^grey[4-6]|^gray[4-6]|^grey[8-9]|7^gray[8-9]", colors(), value = TRUE)], 1)) %>%
+     #                ungroup()
+     #      } else {
+     #           
+     #           ve <- viz_empx() %>% 
+     #                head(input$slider_viz_emp) %>%
+     #                transform(from = str_wrap(from, 12),
+     #                          to = str_wrap(str_to_title(to), 12)) %>%
+     #                group_by(to) %>%
+     #                mutate(edgeCol = sample(colors()[!colors() %in% grep("^grey[1-2]|^gray[1-2]|^grey[4-6]|^gray[4-6]|^grey[8-9]|7^gray[8-9]", colors(), value = TRUE)], 1)) %>%
+     #                ungroup()
+     #      }
+     #      
+     #      eCol <- ve$edgeCol; dfRange <- unique(ve$Range)
+     #      
+     #      d <- data.frame(label = c(ve$from, ve$to), stringsAsFactors = FALSE) %>% distinct() %>%
+     #           mutate(col = ifelse(label %in% ve$from, "greenyellow","turquoise"),
+     #                  shp = ifelse(label %in% ve$from, "circle","diamond"))
+     #      
+     #      ve <- ve %>% select(from,to,weight)# select(-c(Range,edgeCol))
+     #      
+     #      xLabs <- ifelse(ve$weight >= quantile(ve$weight, probs = 0.1), monify(ve$weight), "")
+     #      
+     #      elabPos <- ifelse(input$layout_viz_emp == "spring", 0.5, 0.8)
+     #      
+     #      suppressWarnings(
+     #           qgraph(ve,
+     #                  layout = input$layout_viz_emp,
+     #                  vsize = input$vertexSize_viz_emp, # Size of the nodes
+     #                  label.cex = input$nodeSlide_viz_emp, # Size of Node Labels
+     #                  mar = c(1,1,1,1),
+     #                  title = paste("Political Connections\n", dfRange, sep = ""),
+     #                  #lcolor = "ghostwhite", bg = "gray0", edge.label.bg = "lightyellow1",
+     #                  lcolor = "black", bg = "white", edge.label.bg = "gray90",
+     #                  #fade = TRUE,
+     #                  fade = input$viz_emp_fade,
+     #                  vTrans = 100, asize = 3,
+     #                  color = d$col, shape = d$shp,
+     #                  color.main = "whitesmoke",
+     #                  label.scale.equal = TRUE,
+     #                  edge.label.color = "navyblue", # Color of the numeric labels
+     #                  edge.color = eCol,#x2$edgeCol,#"gray50", # Line color
+     #                  edge.width = 0.75,
+     #                  edge.label.cex = input$edgeLabSlide_viz_emp,
+     #                  edge.label.position = elabPos,#input$labelPos_viz_emp,
+     #                  edge.labels= xLabs))
+     # })
+     # 
+     # 
      
      # *********************************************************************** Time Series
      
