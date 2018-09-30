@@ -491,6 +491,36 @@ yearlyOrg <- dfx %>%
 # Save
 saveRDS(yearlyOrg, paste(dir, "yearlyOrg.rds", sep = ""))
 
+
+# Top Employers
+topEmp <- dfx %>% 
+     #mutate(Loans = ifelse(ContDesc == "Loan Proceeds", "Loan","Not Loan")) %>% 
+     filter(ContDesc != "Loan Proceeds") %>% 
+     group_by(#EmployerName,
+          Employer) %>%
+     summarise(Number_of_Donations = n_distinct(ContributionID),
+               Donations_Under_100 = n_distinct(ContributionID[Amount < 100]),
+               Donations_Over_100 = n_distinct(ContributionID[Amount >= 100]),
+               Pct_Under_100 = round(Donations_Under_100 / Number_of_Donations, 4),
+               Total_Donation_Amount = sum(Amount, na.rm = TRUE),
+               Dollars = monify(Total_Donation_Amount),
+               Num_PAC_Donations = n_distinct(ContributionID[PAC == "PAC"]),
+               Num_Org_Donations = n_distinct(ContributionID[PAC == "Not PAC"]),
+               Total_Donation_Amount = sum(Amount, na.rm = TRUE),
+               PAC_Donation_Amount = sum(Amount[PAC == "PAC"], na.rm = TRUE),
+               Org_Donation_Amount = sum(Amount[PAC == "Not PAC"], na.rm = TRUE),
+               Avg_Donation_Amount = round(Total_Donation_Amount / Number_of_Donations, 2),
+               Avg_PAC_Donation_Amt = round(PAC_Donation_Amount / Num_PAC_Donations, 2),
+               Avg_Org_Donation_Amt = round(Org_Donation_Amount / Num_Org_Donations, 2),
+               Max_Donation = max(Amount, na.rm = TRUE)) %>%
+     ungroup() %>%
+     filter(Total_Donation_Amount >= 250) %>% 
+     arrange(desc(Total_Donation_Amount)); head(topEmp, 20)
+
+# Save
+saveRDS(topEmp, paste(dir, "topEmp.rds", sep = ""))
+
+
 # Employer Summary
 yearlyEmp <- dfx %>% 
      filter(ContDesc != "Loan Proceeds") %>% 

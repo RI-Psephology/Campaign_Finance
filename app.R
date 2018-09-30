@@ -260,6 +260,9 @@ yearlyOrg <- readRDS("yearlyOrg.rds")
 # By Employer
 yearlyEmp <- readRDS("yearlyEmp.rds")
 
+# Top Employers
+topEmp <- readRDS("topEmp.rds")
+
 # Employer to Organization
 yearlyEmpOrg <- readRDS("yearlyEmpOrg.rds")
 
@@ -319,7 +322,7 @@ expOrgComp <- readRDS("comp_org_expenditures.rds")
 expOrg <- readRDS("org_expenditures.rds")
 
 # Campaign Finance Contributions
-dfx <- readRDS("campaign_finance_2018-09-22.rds") %>% 
+dfx <- readRDS("campaign_finance_2018-09-27.rds") %>% 
      transform(Donor_Name_Unformatted = str_to_title(trimws(Donor_Name_Unformatted))) %>% 
      transform(OrganizationName = str_to_title(trimws(OrganizationName))) %>% 
      transform(OrganizationName = gsub("^Ri ", "RI ", OrganizationName)) %>% 
@@ -346,7 +349,7 @@ subIndustries <- sort(unique(dfx$Industry))
 industries <- sort(unique(dfx$Industry2))
 #visIndustries <- sort(unique(donateVisInd$Industry[donateVisInd$Ind == "Sub Industry"]))
 donors <- sort(unique(topDonors$FullName))
-employers <- sort(unique(dfx$Employer))
+employers <- sort(unique(topEmp$Employer))
 organizations <- sort(unique(dfx$OrganizationName))
 donor_cities <- sort(unique(dfx$donor_city))
 donor_states <- sort(unique(grep("^[a-zA-Z]{2}$", unique(yearlyLoc$donor_st), value = TRUE)))
