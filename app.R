@@ -1144,7 +1144,7 @@ server <- function(input, output, session) {
                geom_label(size = textLabelFun(dx2),#3.9, 
                           fontface = "bold", aes(label = monify(Total_Donation_Amount)), hjust = -0.25) + #, hjust = "outward"
                scale_y_continuous(label = dollar, limits = c(0, round(max(dx2$Total_Donation_Amount) * 1.1, 0))) +
-               labs(x = "", y = "Total", title = "Top Donors",
+               labs(x = "", y = "Total", title = "Total Campaign Contributions",
                     subtitle = unique(dx2$Range)) +
                coord_flip() +
                theme(axis.text.x = element_text(size = 14,
@@ -1467,9 +1467,9 @@ server <- function(input, output, session) {
           df_org <- orgx() %>% head(input$sliderOrg)
           #var <- unique(df_org$Industry2)
           if ("Industry2" %in% names(df_org)) {
-               orgTitle <- paste("Orgs Receiving Donations from ", unique(df_org$Industry2), " Industry", sep = "")
+               orgTitle <- paste("Orgs Receiving Contributions from ", unique(df_org$Industry2), " Industry", sep = "")
           } else {
-               orgTitle <- "Top Earning Organizations"
+               orgTitle <- "Total Contributions Received by Organization"
           }
           
           ggplot(df_org, aes(reorder(OrganizationName, Total_Donation_Amount), Total_Donation_Amount)) +
@@ -1526,7 +1526,7 @@ server <- function(input, output, session) {
                geom_bar(stat = "identity", color = "gray50", width = 0.5, fill = "blueviolet", alpha = 0.8) +
                geom_text(size = textLabelFun(df_emp), fontface = "bold", aes(label = monify(Total_Donation_Amount)), hjust = -0.25) +
                scale_y_continuous(label = dollar, limits = c(0, round(max(df_emp$Total_Donation_Amount) * 1.1, 0))) +
-               labs(x = "", y = "Total", title = "Top Employers Making Donations",
+               labs(x = "", y = "Total", title = "Top Employers Making Contributions",
                     subtitle = unique(df_emp$Range)) +
                coord_flip() +
                theme(axis.text.x = element_text(size = 14, face = "bold"),
@@ -1689,9 +1689,9 @@ server <- function(input, output, session) {
           df_ind <- indx() %>% head(input$sliderInd)
           
           if (df_ind$SubIndustry == "Industry") {
-               indTitle <- "Top Donations by Industry"
+               indTitle <- "Top Contributions by Industry"
           } else {
-               indTitle <- "Top Donations by Sub-Industry"
+               indTitle <- "Top Contributions by Sub-Industry"
           }
           
           ggplot(df_ind, aes(reorder(Industry, Total_Donation_Amount), Total_Donation_Amount)) +
@@ -1985,8 +1985,8 @@ server <- function(input, output, session) {
                #geom_vline(xintercept = emo$Loc, lty = 3, lwd = 0.8, color = "violetred") +
                scale_x_date(breaks=pretty_breaks(), date_minor_breaks="1 month") + 
                scale_y_continuous(label = dollar) +
-               labs(x = "Donation Month", y = "Total Donations",
-                    title = "Monthly Campaign Finance Donations",
+               labs(x = "", y = "Monthly Total",
+                    title = "Monthly Campaign Finance Contributions",
                     subtitle = unique(tx$Range)) +
                theme(axis.text.x = element_text(size = 14),#axisLabelFun(tx), angle = 45, hjust = 1, vjust = 1),
                      plot.subtitle = element_text(size = 14),
@@ -2008,8 +2008,8 @@ server <- function(input, output, session) {
                #geom_vline(xintercept = emo$Loc, lty = 3, lwd = 0.8, color = "violetred") +
                scale_x_date(breaks=pretty_breaks(), date_minor_breaks="1 month") + 
                scale_y_continuous(label = dollar) +
-               labs(x = "Donation Month", y = "Total Donations",
-                    title = "Running       Monthly Campaign Finance Donations",
+               labs(x = "", y = "Cumulative Total",
+                    title = "Cumulative Campaign Finance Contributions",
                     subtitle = unique(tx$Range)) +
                theme(axis.text.x = element_text(size = 14),#axisLabelFun(tx), angle = 45, hjust = 1, vjust = 1),
                      plot.subtitle = element_text(size = 14),
@@ -2247,7 +2247,7 @@ server <- function(input, output, session) {
                geom_bar(stat = "identity", color = "gray50", width = 0.5, aes(fill = donor_st), alpha = 0.8) +
                geom_text(size = textLabelFun(cityx), fontface = "bold", aes(label = monify(Total_Donation_Amount)), hjust = -0.25) +
                scale_y_continuous(label = dollar, limits = c(0, round(max(cityx$Total_Donation_Amount) * 1.1, 0))) +
-               labs(x = "", y = "Total", title = "Campaign Donations by City",
+               labs(x = "", y = "Total", title = "Campaign Contributions by Donor City",
                     subtitle = unique(cityx$Range)) +
                coord_flip() + theme_bw() +
                theme(axis.text.x = element_text(size = 12, face = "bold"), legend.title = element_blank(),
@@ -2297,7 +2297,7 @@ server <- function(input, output, session) {
                geom_bar(stat = "identity", color = "gray50", width = 0.5, aes(fill = donor_region), alpha = 0.8) + #coord_polar() +
                geom_text(size = textLabelFun(stx), fontface = "bold", aes(label = monify(Total_Donation_Amount)), hjust = -0.25) +
                scale_y_continuous(label = dollar, limits = c(0, round(max(stx$Total_Donation_Amount) * 1.1, 0))) +
-               labs(x = "", y = "Total", title = "Campaign Donations by State",
+               labs(x = "", y = "Total", title = "Campaign Contributions by Donor State",
                     subtitle = unique(stx$Range)) +
                coord_flip() + 
                theme_bw() +
@@ -2337,7 +2337,7 @@ server <- function(input, output, session) {
                geom_bar(stat = "identity", color = "gray50", width = 0.5, aes(fill = donor_region), alpha = 0.8) + coord_polar() +
                geom_text(data = head(stx, 2), color = "violetred", size = 4, fontface = "bold", aes(label = monify(Total_Donation_Amount)), hjust = -0.25) +
                scale_y_continuous(label = dollar, limits = c(0, round(max(stx$Total_Donation_Amount) * 1.1, 0))) +
-               labs(x = "", y = "Total", title = "Donations from Other States",
+               labs(x = "", y = "Total", title = "Contributions from Other States",
                     subtitle = unique(stx$Range)) +
                #coord_flip() + 
                theme_bw() +
@@ -2376,7 +2376,7 @@ server <- function(input, output, session) {
                scale_fill_manual(values = c("dodgerblue","navyblue")) +
                scale_y_continuous(label = dollar) +
                labs(x = "", y = "Donations Received", 
-                    title = "Political Donations Received by State of Donor",
+                    title = "Campaign Contributions Received by State of Donor",
                     subtitle = unique(df_gina$Range)) +
                #caption = paste(srce, "downloaded on Feb 9, 2017.  Donation 'ReceiptDate' between Jan 1, 2017 & Dec 31, 2017", sep = "\n")) +
                theme_bw() +
