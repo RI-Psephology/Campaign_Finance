@@ -162,55 +162,12 @@ xpOrg <- function(x) {
      }}
 
 
-# dir <- "//cdsfsp06/InterSite/Integra/analytics/Misc_Projects/Misc/Providence_Open_Data/Expenditures/"
-# 
-# a <- read.csv(paste(dir, "a.csv", sep = ""), colClasses = "character")
-# b <- read.csv(paste(dir, "b.csv", sep = ""), colClasses = "character")
-# c <- read.csv(paste(dir, "c.csv", sep = ""), colClasses = "character")
-# d <- read.csv(paste(dir, "d_quote_to_apost.csv", sep = ""), colClasses = "character")
-# e <- read.csv(paste(dir, "e_quote_to_apost.csv", sep = ""), colClasses = "character")
-# f <- read.csv(paste(dir, "f.csv", sep = ""), colClasses = "character")
-# g <- read.csv(paste(dir, "g_quote_to_apost.csv", sep = ""), colClasses = "character")
-# h <- read.csv(paste(dir, "h.csv", sep = ""), colClasses = "character")
-# i <- read.csv(paste(dir, "i.csv", sep = ""), colClasses = "character")
-# j <- read.csv(paste(dir, "j_quote_to_apost.csv", sep = ""), colClasses = "character")
-# k <- read.csv(paste(dir, "k.csv", sep = ""), colClasses = "character")
-# l <- read.csv(paste(dir, "l_quote_to_apost.csv", sep = ""), colClasses = "character")
-# m <- read.csv(paste(dir, "m.csv", sep = ""), colClasses = "character")
-# n <- read.csv(paste(dir, "n.csv", sep = ""), colClasses = "character")
-# o <- read.csv(paste(dir, "o_quote_to_apost.csv", sep = ""), colClasses = "character")
-# p <- read.csv(paste(dir, "p_quote_to_apost.csv", sep = ""), colClasses = "character")
-# q <- read.csv(paste(dir, "q.csv", sep = ""), colClasses = "character")
-# r <- read.csv(paste(dir, "r.csv", sep = ""), colClasses = "character")
-# s <- read.csv(paste(dir, "s.csv", sep = ""), colClasses = "character")
-# t <- read.csv(paste(dir, "t_quote_to_apost.csv", sep = ""), colClasses = "character")
-# u <- read.csv(paste(dir, "u.csv", sep = ""), colClasses = "character")
-# v <- read.csv(paste(dir, "v.csv", sep = ""), colClasses = "character")
-# w <- read.csv(paste(dir, "w.csv", sep = ""), colClasses = "character")
-# x <- read.csv(paste(dir, "x.csv", sep = ""), colClasses = "character")
-# y <- read.csv(paste(dir, "y.csv", sep = ""), colClasses = "character")
-# z <- read.csv(paste(dir, "z.csv", sep = ""), colClasses = "character")
-# 
-# dat <- bind_rows(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z) %>%
-#      select(-c(BeginDate,EndDate)) %>% distinct()
-# 
-# # Clear
-# rm(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z)
-# 
-# dir <- "//cdsfsp06/InterSite/Integra/analytics/Misc_Projects/Misc/Providence_Open_Data/"
-# 
-# # Save
-# saveRDS(dat, paste(dir, "Expend_thru_August2018.rds", sep = ""))
-# write.csv(dat, paste(dir, "Expend_thru_August2018.csv", sep = ""), na = "", row.names = FALSE)
-
-
-#dir <- "//cdsfsp06/InterSite/Integra/analytics/Misc_Projects/Misc/Providence_Open_Data/"#Expenditures/"
 dir <- "/Users/jeffreyrichardson/Documents/Campaign_Finance/Psephology_App/"
 
-
-
+#df <- readRDS(paste(dir, "Expend_thru_Sep18_2018.rds", sep = "")) %>% distinct() 
+     
 # Campaign Finance Expenditures
-df <- readRDS(paste(dir, "Expend_thru_Sep18_2018.rds", sep = "")) %>% distinct() %>% 
+df <- readRDS(paste(dir, "Expend_thru_Oct10_2018.rds", sep = "")) %>% distinct() %>% 
      transform(#ExpDate = mdy(ExpDate),
           OrganizationName = str_to_title(trimws(OrganizationName)),
           FullName = str_to_lower(trimws(FullName)),
@@ -2691,11 +2648,15 @@ df$FullName[df$FullName %in% sherman] <- "Zachary W Sherman"; rm(sherman)
 # cruise <- df %>% filter(FullName %in% c("bay queen cruises","newport cruise company")); head(cruise)
 # values <- sort(grep("mat", df$OrganizationName, value = TRUE, ignore.case = TRUE)) %>% unique() %>% print; xpOrg(values)
 # df$OrganizationName[df$OrganizationName %in% values] <- "values"; rm(values)
+dir <- "/Users/jeffreyrichardson/Documents/Campaign_Finance/Psephology_App/"
 
 # Save
 saveRDS(df, paste(dir, "Exp_Clean.rds", sep = ""))
 df <- readRDS(paste(dir, "Exp_Clean.rds", sep = ""))
 
+# Save as csv
+#write.csv(df, "/Users/jeffreyrichardson/Documents/Campaign_Finance/expenditures_2018-10-05.csv", row.names = FALSE, na = "")
+write.csv(df, "/Users/jeffreyrichardson/Documents/Campaign_Finance/expenditures_2018-10-10.csv", row.names = FALSE, na = "")
 
 df %>% 
      group_by(ExpDesc) %>% 
@@ -2741,7 +2702,8 @@ p1
 p2
 p12
 
-pdf(paste(dir, "Exp_by_Month.pdf", sep = ""), onefile = TRUE, height = 7.5, width = 10.5)
+#pdf(paste(dir, "Exp_by_Month.pdf", sep = ""), onefile = TRUE, height = 7.5, width = 10.5)
+pdf("/Users/jeffreyrichardson/Documents/Campaign_Finance/Exp_by_Month_Oct10_2018.pdf", onefile = TRUE, height = 7.5, width = 10.5)
 
 for(i in 1:length(pltList)) {
      plot(pltList[[i]])

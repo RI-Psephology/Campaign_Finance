@@ -368,7 +368,8 @@ Start <- Sys.time() %>% print
 #df <- readRDS(paste(dir, "campaign_finance_2018-06.rds", sep = ""))
 #df <- readRDS(paste(dir, "campaign_finance_2018-08-04.rds", sep = "")) %>% distinct()
 #df <- readRDS(paste(dir, "Donations_thru_Sep18.rds", sep = ""))
-df <- readRDS(paste(dir, "Donations_thru_Sep18_2018.rds", sep = ""))
+#df <- readRDS(paste(dir, "Donations_thru_Sep18_2018.rds", sep = ""))
+df <- readRDS(paste(dir, "Donations_thru_Oct10_2018.rds", sep = ""))
 
 # Source of data
 srce <- "http://www.ricampaignfinance.com/RIPublic/Filings.aspx"
@@ -1236,11 +1237,13 @@ dir <- "/Users/jeffreyrichardson/Documents/Campaign_Finance/"
 
 # Save
 #saveRDS(dfx, paste(dir, "dat_thru_cities_2018-09-18.rds", sep = ""))
+saveRDS(dfx, paste(dir, "dat_thru_cities_2018-10-10.rds", sep = ""))
 #Start <- Sys.time() %>% print
-startTime <- Sys.time() %>% print
+startTime2 <- Sys.time() %>% print
 # 
 #dir <- "/Users/jeffreyrichardson/Documents/Campaign_Finance/"
-dfx <- readRDS(paste(dir, "dat_thru_cities_2018-09-18.rds", sep = ""))
+#dfx <- readRDS(paste(dir, "dat_thru_cities_2018-09-18.rds", sep = ""))
+dfx <- readRDS(paste(dir, "dat_thru_cities_2018-10-10.rds", sep = ""))
 
 # ****************************************************************************************************************************
 # ******************************************            Format              **************************************************
@@ -9684,12 +9687,14 @@ dir <- "/Users/jeffreyrichardson/Documents/Campaign_Finance/"
 #saveRDS(dfx, "//cdsfsp06/InterSite/Integra/analytics/Misc_Projects/Misc/Providence_Open_Data/campaign_finance_2018-08-04.rds")
 #saveRDS(dfx, paste(dir, "campaign_finance_2018-09-18.rds", sep = ""))
 #saveRDS(dfx, paste(dir, "campaign_finance_2018-09-22.rds", sep = ""))
-saveRDS(dfx, paste(dir, "campaign_finance_2018-09-27.rds", sep = ""))
+#saveRDS(dfx, paste(dir, "campaign_finance_2018-09-27.rds", sep = ""))
+saveRDS(dfx, paste(dir, "campaign_finance_2018-10-10.rds", sep = ""))
 
 #FinishTime <- Sys.time(); FinishTime - Start
 FinishTime <- Sys.time() 
 
-FinishTime - startTime # Time to clean employers and donors - Time difference of 1.044729 hours
+FinishTime - startTime # Time to clean everything - Time difference of 1.044729 hours
+FinishTime - startTime2 # Time to clean employers and donors - Time difference of 1.044729 hours
 FinishTime - startNames # Time to clean the donors - Time difference of 27.19334 mins
 startNames - startTime  # Time to clean the employers - Time difference of 35.49037 mins
 

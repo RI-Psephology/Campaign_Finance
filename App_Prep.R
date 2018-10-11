@@ -73,7 +73,7 @@ dupf <- function(dat, var, ...) {
 
 dir <- "/Users/jeffreyrichardson/Documents/Campaign_Finance/Psephology_App/"
 
-dfx <- readRDS(paste(dir, "campaign_finance_2018-09-27.rds", sep = "")) %>% 
+dfx <- readRDS(paste(dir, "campaign_finance_2018-10-10.rds", sep = "")) %>% 
      transform(Donor_Name_Unformatted = str_to_title(trimws(Donor_Name_Unformatted))) %>% 
      transform(OrganizationName = str_to_title(trimws(OrganizationName))) %>% 
      transform(OrganizationName = gsub("^Ri ", "RI ", OrganizationName)) %>% 
@@ -93,6 +93,10 @@ dfx <- readRDS(paste(dir, "campaign_finance_2018-09-27.rds", sep = "")) %>%
             Emp_City = paste(emp_city, emp_st, sep = ", ")); head(dfx)
 
 srce <- "http://www.ricampaignfinance.com/RIPublic/Filings.aspx"
+
+# Save
+#write.csv(dfx, "/Users/jeffreyrichardson/Documents/Campaign_Finance/contributions_2018-10-05.csv", na = "", row.names = FALSE)
+write.csv(dfx, "/Users/jeffreyrichardson/Documents/Campaign_Finance/contributions_2018-10-10.csv", na = "", row.names = FALSE)
 
 # subIndustry <- sort(unique(dfx$Industry))
 # industry <- sort(unique(dfx$Industry2))
@@ -722,7 +726,7 @@ saveRDS(timeSeries, paste(dir, "timeSeries.rds", sep = ""))
 # ***************************************************************************************
 # ***************************************************************************************
 
-%>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% %>% ggplot(gov18Org, aes(CY,Total_Donation_Amount)) +
+ggplot(gov18Org, aes(CY,Total_Donation_Amount)) +
      geom_point(size = 2, aes(color = OrganizationName), alpha = 0.5) +
      geom_line(stat = "identity", size = 1,  aes(group = OrganizationName, color = OrganizationName)) +
      scale_y_continuous(label = dollar) +
