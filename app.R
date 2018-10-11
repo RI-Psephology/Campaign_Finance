@@ -322,7 +322,7 @@ expOrgComp <- readRDS("comp_org_expenditures.rds")
 expOrg <- readRDS("org_expenditures.rds")
 
 # Campaign Finance Contributions
-dfx <- readRDS("campaign_finance_2018-09-27.rds") %>% 
+dfx <- readRDS("campaign_finance_2018-10-10.rds") %>% 
      transform(Donor_Name_Unformatted = str_to_title(trimws(Donor_Name_Unformatted))) %>% 
      transform(OrganizationName = str_to_title(trimws(OrganizationName))) %>% 
      transform(OrganizationName = gsub("^Ri ", "RI ", OrganizationName)) %>% 
@@ -361,7 +361,8 @@ exp_dex <- sort(unique(expNet$ExpDesc))
 # Latest Data Extraction
 #upload_date <- format(ymd("2018-08-01"), "%b %d, %Y")
 upload_date <- "Dec 31, "
-upload_date18 <- "Sep 19, "
+#upload_date18 <- "Sep 19, "
+upload_date18 <- "Oct 10, "
 #rm(ui, server)
 # Run App
 
