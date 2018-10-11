@@ -2656,7 +2656,7 @@ df <- readRDS(paste(dir, "Exp_Clean.rds", sep = ""))
 
 # Save as csv
 #write.csv(df, "/Users/jeffreyrichardson/Documents/Campaign_Finance/expenditures_2018-10-05.csv", row.names = FALSE, na = "")
-write.csv(df, "/Users/jeffreyrichardson/Documents/Campaign_Finance/expenditures_2018-10-10.csv", row.names = FALSE, na = "")
+#write.csv(df, "/Users/jeffreyrichardson/Documents/Campaign_Finance/expenditures_2018-10-10.csv", row.names = FALSE, na = "")
 
 df %>% 
      group_by(ExpDesc) %>% 
@@ -2703,7 +2703,7 @@ p2
 p12
 
 #pdf(paste(dir, "Exp_by_Month.pdf", sep = ""), onefile = TRUE, height = 7.5, width = 10.5)
-pdf("/Users/jeffreyrichardson/Documents/Campaign_Finance/Exp_by_Month_Oct10_2018.pdf", onefile = TRUE, height = 7.5, width = 10.5)
+#pdf("/Users/jeffreyrichardson/Documents/Campaign_Finance/Exp_by_Month_Oct10_2018.pdf", onefile = TRUE, height = 7.5, width = 10.5)
 
 for(i in 1:length(pltList)) {
      plot(pltList[[i]])

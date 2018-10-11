@@ -96,7 +96,7 @@ srce <- "http://www.ricampaignfinance.com/RIPublic/Filings.aspx"
 
 # Save
 #write.csv(dfx, "/Users/jeffreyrichardson/Documents/Campaign_Finance/contributions_2018-10-05.csv", na = "", row.names = FALSE)
-write.csv(dfx, "/Users/jeffreyrichardson/Documents/Campaign_Finance/contributions_2018-10-10.csv", na = "", row.names = FALSE)
+#write.csv(dfx, "/Users/jeffreyrichardson/Documents/Campaign_Finance/contributions_2018-10-10.csv", na = "", row.names = FALSE)
 
 # subIndustry <- sort(unique(dfx$Industry))
 # industry <- sort(unique(dfx$Industry2))
